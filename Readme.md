@@ -37,11 +37,13 @@ Ex: import goodfile.state
 **list &lt;module type&gt;** - The list command can be used to list the different types of modules loaded into Just-Metadata.  This command will take an extra parameter, either "analysis" or "gather".  Just-Metadata will display all mofules of the type that the user requests is listed.
 
 Ex: list analysis
+
 Ex: list gather
 
 **gather &lt;gather module name&gt;** - The gather command tells Just-Metadata to run the module specified and gather information from that source.  This can be used to gather geographical information, Virustotal, whois, and more.  It's all based on the module.  The data gathered will be stored within the framework in memory and can also be saved to disk with the "save" command.
 
 Ex: gather geoinfo
+
 Ex: gather virustotal
 
 **analyze &lt;analysis module name&gt;** - The analyze command tells Metadata to run an analysis module against the data loaded into the framework.  These modules can be used to find IP addresses that share the same SSH keys or SSL Public Key certificates, or certificate chains.  They can also be used to find IP addresses used in the same callbacks by malicious executables.
