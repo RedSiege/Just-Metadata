@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Global Variables
+userid=`id -u`
+osinfo=`cat /etc/issue|cut -d" " -f1|head -n1`
+
+# Clear Terminal (For Prettyness)
+clear
+
+# Print Title
+echo '#######################################################################'
+echo '#                       Just-Metadata Setup                           #'
+echo '#######################################################################'
+echo
+
+# Check to make sure you are root!
+# Thanks to @themightyshiv for helping to get a decent setup script out
+if [ "${userid}" != '0' ]; then
+  echo '[Error]: You must run this setup script with root privileges.'
+  echo
+  exit 1
+fi
+
+# OS Specific Installation Statement
+case ${osinfo} in
+  # Kali Dependency Installation
+  Kali)
+    echo '[*] Installing Kali Dependencies'
+    apt-get install -y python-pip
+    pip install ipwhois
+    pip install ipwhois --upgrade
+    pip install requests
+    pip install requests --upgrade
+    pip install shodan
+    pip install shodan --upgrade
+  ;;
+  # Debian 7+ Dependency Installation
+  Debian)
+    echo '[*] Installing Debian Dependencies'
+    apt-get install -y python-pip
+    pip install ipwhois
+    pip install ipwhois --upgrade
+    pip install requests
+    pip install requests --upgrade
+    pip install shodan
+    pip install shodan --upgrade
+    echo
+  ;;
+  # Ubuntu (tested in 13.10) Dependency Installation
+  Ubuntu)
+    echo '[*] Installing Ubuntu Dependencies'
+    apt-get install -y python-pip
+    pip install ipwhois
+    pip install ipwhois --upgrade
+    pip install requests
+    pip install requests --upgrade
+    pip install shodan
+    pip install shodan --upgrade
+    echo
+    echo
+esac
+
+# Finish Message
+echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
+echo
