@@ -19,8 +19,11 @@ class IntelGather:
 
         try:
             print "Grabbing list of TOR exit nodes.."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://torstatus.blutmagie.de/ip_list_exit.php/Tor_ip_list_EXIT.csv')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             tor_response = response.read()
         except NameError:
             tor_response = "Not able to grab information"
@@ -29,8 +32,11 @@ class IntelGather:
 
         try:
             print "Grabbing attacker IP list from the Animus project..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'https://raw.githubusercontent.com/animus-project/threat_data/master/master_lists/all_ips_frequency.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             animus_lines = response.read()
         except NameError:
             animus_lines = "Not able to grab information"
@@ -39,8 +45,11 @@ class IntelGather:
 
         try:
             print "Grabbing EmergingThreats list..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             ethreats_response = response.read()
         except NameError:
             ethreats_response = "Not able to grab information"
@@ -49,8 +58,11 @@ class IntelGather:
 
         try:
             print "Grabbing AlienVault reputation list..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://reputation.alienvault.com/reputation.data')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             alientvault_resp = response.read()
         except NameError:
             alientvault_resp = "Not able to grab information"
@@ -59,8 +71,11 @@ class IntelGather:
 
         try:
             print "Grabbing Blocklist.de info..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://www.blocklist.de/lists/bruteforcelogin.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             blocklist_resp = response.read()
         except NameError:
             blocklist_resp = "Not able to grab information"
@@ -69,8 +84,11 @@ class IntelGather:
 
         try:
             print "Grabbing DragonResearch's SSH list..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://dragonresearchgroup.org/insight/sshpwauth.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             drag_ssh_resp = response.read()
         except NameError:
             drag_ssh_resp = "Not able to grab information"
@@ -79,8 +97,11 @@ class IntelGather:
 
         try:
             print "Grabbing DragonResearch's VNC list..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://dragonresearchgroup.org/insight/vncprobe.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             drag_vnc_resp = response.read()
         except NameError:
             drag_vnc_resp = "Not able to grab information"
@@ -89,7 +110,10 @@ class IntelGather:
 
         try:
             print "Grabbing OpenBlock IP list..."
-            response = urllib2.urlopen('http://www.openbl.org/lists/date_all.txt')
+            req = urllib2.Request('http://www.openbl.org/lists/date_all.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             openblock_resp = response.read()
         except NameError:
             openblock_resp = "Not able to grab information"
@@ -98,8 +122,11 @@ class IntelGather:
 
         try:
             print "Grabbing NoThinkMalware list..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://www.nothink.org/blacklist/blacklist_malware_http.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             ntmalware_resp = response.read()
         except NameError:
             ntmalware_resp = "Not able to grab information"
@@ -108,8 +135,11 @@ class IntelGather:
 
         try:
             print "Grabbing NoThinkSSH list..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://www.nothink.org/blacklist/blacklist_ssh_all.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             ntssh_resp = response.read()
         except NameError:
             ntssh_resp = "Not able to grab information"
@@ -118,8 +148,11 @@ class IntelGather:
 
         try:
             print "Grabbing Feodo list..."
-            response = urllib2.urlopen(
+            req = urllib2.Request(
                 'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             feodo_resp = response.read()
         except NameError:
             feodo_resp = "Not able to grab information"
@@ -128,7 +161,10 @@ class IntelGather:
 
         try:
             print "Grabbing antispam spam list..."
-            response = urllib2.urlopen('http://antispam.imp.ch/spamlist')
+            req = urllib2.Request('http://antispam.imp.ch/spamlist')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             antispam_resp = response.read()
         except NameError:
             antispam_resp = "Not able to grab information"
@@ -137,7 +173,10 @@ class IntelGather:
 
         try:
             print "Grabbing malc0de list..."
-            response = urllib2.urlopen('http://malc0de.com/bl/IP_Blacklist.txt')
+            req = urllib2.Request('http://malc0de.com/bl/IP_Blacklist.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             malc0de_resp = response.read()
         except NameError:
             malc0de_resp = "Not able to grab information"
@@ -146,7 +185,10 @@ class IntelGather:
 
         try:
             print "Grabbing MalwareBytes list..."
-            response = urllib2.urlopen('http://hosts-file.net/rss.asp')
+            req = urllib2.Request('http://hosts-file.net/rss.asp')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
             malbytes_resp = response.read()
         except NameError:
             malbytes_resp = "Not able to grab information"
