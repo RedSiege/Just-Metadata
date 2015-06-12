@@ -159,15 +159,17 @@ class Conductor:
                             gather_module_found = False
                             try:
                                 for path, ig_obj in self.intelgathering_transforms.iteritems():
-                                    if self.user_command.split()[1].lower() == ig_obj.cli_name.lower():
+                                    if self.user_command.split()[1].lower() == 'all':
                                         ig_obj.gather(self.ip_objects)
-                                        self.user_command = ""
+                                        gather_module_found = True
+                                    elif self.user_command.split()[1].lower() == ig_obj.cli_name.lower():
+                                        ig_obj.gather(self.ip_objects)
                                         gather_module_found = True
                                         break
                                 if not gather_module_found:
                                     print helpers.color("\n\n[*] Error: You didn't provide a valid gather module!", warning=True)
                                     print helpers.color("[*] Please re-run and use a valid module.", warning=True)
-                                    self.user_command = ""
+                                self.user_command = ""
                             except IndexError:
                                 print helpers.color("\n\n[*] Error: Module command requires a module to load!", warning=True)
                                 print helpers.color("[*] Ex: gather geoinfo", warning=True)
@@ -237,7 +239,10 @@ class Conductor:
                             try:
                                 hit_module = False
                                 for path, analytics_obj in self.analytical_transforms.iteritems():
-                                    if self.user_command.split()[1].lower() == analytics_obj.cli_name.lower():
+                                    if self.user_command.split()[1].lower() == 'all':
+                                        analytics_obj.analyze(self.ip_objects)
+                                        hit_module = True
+                                    elif self.user_command.split()[1].lower() == analytics_obj.cli_name.lower():
                                         analytics_obj.analyze(self.ip_objects)
                                         hit_module = True
                                         break
@@ -255,9 +260,11 @@ class Conductor:
                                 if list_command.lower() == 'analysis':
                                     for path, object_name in self.analytical_transforms.iteritems():
                                         print object_name.cli_name + " => " + object_name.description
+                                    print "All => Invokes all of the above Analysis modules"
                                 elif list_command.lower() == 'gather':
                                     for path, object_name in self.intelgathering_transforms.iteritems():
                                         print object_name.cli_name + " => " + object_name.description
+                                    print "All => Invokes all of the above IntelGathering modules"
                                 self.user_command = ""
                             except IndexError:
                                 print helpers.color("\n\n[*] Error: You did not provide module type to display!", warning=True)
