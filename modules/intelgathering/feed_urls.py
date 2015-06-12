@@ -17,71 +17,141 @@ class IntelGather:
 
     def gather(self, all_ips):
 
-        print "Grabbing list of TOR exit nodes.."
-        response = urllib2.urlopen(
-            'http://torstatus.blutmagie.de/ip_list_exit.php/Tor_ip_list_EXIT.csv')
-        tor_response = response.read()
+        try:
+            print "Grabbing list of TOR exit nodes.."
+            response = urllib2.urlopen(
+                'http://torstatus.blutmagie.de/ip_list_exit.php/Tor_ip_list_EXIT.csv')
+            tor_response = response.read()
+        except NameError:
+            tor_response = "Not able to grab information"
+        except urllib2.HTTPError:
+            tor_response = "Not able to grab information"
 
-        print "Grabbing attacker IP list from the Animus project..."
-        response = urllib2.urlopen(
-            'https://raw.githubusercontent.com/animus-project/threat_data/master/master_lists/all_ips_frequency.txt')
-        animus_lines = response.read()
+        try:
+            print "Grabbing attacker IP list from the Animus project..."
+            response = urllib2.urlopen(
+                'https://raw.githubusercontent.com/animus-project/threat_data/master/master_lists/all_ips_frequency.txt')
+            animus_lines = response.read()
+        except NameError:
+            animus_lines = "Not able to grab information"
+        except urllib2.HTTPError:
+            animus_lines = "Not able to grab information"
 
-        print "Grabbing EmergingThreats list..."
-        response = urllib2.urlopen(
-            'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
-        ethreats_response = response.read()
+        try:
+            print "Grabbing EmergingThreats list..."
+            response = urllib2.urlopen(
+                'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
+            ethreats_response = response.read()
+        except NameError:
+            ethreats_response = "Not able to grab information"
+        except urllib2.HTTPError:
+            ethreats_response = "Not able to grab information"
 
-        print "Grabbing AlienVault reputation list..."
-        response = urllib2.urlopen(
-            'http://reputation.alienvault.com/reputation.data')
-        alientvault_resp = response.read()
+        try:
+            print "Grabbing AlienVault reputation list..."
+            response = urllib2.urlopen(
+                'http://reputation.alienvault.com/reputation.data')
+            alientvault_resp = response.read()
+        except NameError:
+            alientvault_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            alientvault_resp = "Not able to grab information"
 
-        print "Grabbing Blocklist.de info..."
-        response = urllib2.urlopen(
-            'http://www.blocklist.de/lists/bruteforcelogin.txt')
-        blocklist_resp = response.read()
+        try:
+            print "Grabbing Blocklist.de info..."
+            response = urllib2.urlopen(
+                'http://www.blocklist.de/lists/bruteforcelogin.txt')
+            blocklist_resp = response.read()
+        except NameError:
+            blocklist_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            blocklist_resp = "Not able to grab information"
 
-        print "Grabbing DragonResearch's SSH list..."
-        response = urllib2.urlopen(
-            'http://dragonresearchgroup.org/insight/sshpwauth.txt')
-        drag_ssh_resp = response.read()
+        try:
+            print "Grabbing DragonResearch's SSH list..."
+            response = urllib2.urlopen(
+                'http://dragonresearchgroup.org/insight/sshpwauth.txt')
+            drag_ssh_resp = response.read()
+        except NameError:
+            drag_ssh_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            drag_ssh_resp = "Not able to grab information"
 
-        print "Grabbing DragonResearch's VNC list..."
-        response = urllib2.urlopen(
-            'http://dragonresearchgroup.org/insight/vncprobe.txt')
-        drag_vnc_resp = response.read()
+        try:
+            print "Grabbing DragonResearch's VNC list..."
+            response = urllib2.urlopen(
+                'http://dragonresearchgroup.org/insight/vncprobe.txt')
+            drag_vnc_resp = response.read()
+        except NameError:
+            drag_vnc_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            drag_vnc_resp = "Not able to grab information"
 
-        print "Grabbing OpenBlock IP list..."
-        response = urllib2.urlopen('http://www.openbl.org/lists/date_all.txt')
-        openblock_resp = response.read()
+        try:
+            print "Grabbing OpenBlock IP list..."
+            response = urllib2.urlopen('http://www.openbl.org/lists/date_all.txt')
+            openblock_resp = response.read()
+        except NameError:
+            openblock_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            openblock_resp = "Not able to grab information"
 
-        print "Grabbing NoThinkMalware list..."
-        response = urllib2.urlopen(
-            'http://www.nothink.org/blacklist/blacklist_malware_http.txt')
-        ntmalware_resp = response.read()
+        try:
+            print "Grabbing NoThinkMalware list..."
+            response = urllib2.urlopen(
+                'http://www.nothink.org/blacklist/blacklist_malware_http.txt')
+            ntmalware_resp = response.read()
+        except NameError:
+            ntmalware_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            ntmalware_resp = "Not able to grab information"
 
-        print "Grabbing NoThinkSSH list..."
-        response = urllib2.urlopen(
-            'http://www.nothink.org/blacklist/blacklist_ssh_all.txt')
-        ntssh_resp = response.read()
+        try:
+            print "Grabbing NoThinkSSH list..."
+            response = urllib2.urlopen(
+                'http://www.nothink.org/blacklist/blacklist_ssh_all.txt')
+            ntssh_resp = response.read()
+        except NameError:
+            ntssh_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            ntssh_resp = "Not able to grab information"
 
-        print "Grabbing Feodo list..."
-        response = urllib2.urlopen(
-            'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
-        feodo_resp = response.read()
+        try:
+            print "Grabbing Feodo list..."
+            response = urllib2.urlopen(
+                'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
+            feodo_resp = response.read()
+        except NameError:
+            feodo_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            feodo_resp = "Not able to grab information"
 
-        print "Grabbing antispam spam list..."
-        response = urllib2.urlopen('http://antispam.imp.ch/spamlist')
-        antispam_resp = response.read()
+        try:
+            print "Grabbing antispam spam list..."
+            response = urllib2.urlopen('http://antispam.imp.ch/spamlist')
+            antispam_resp = response.read()
+        except NameError:
+            antispam_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            antispam_resp = "Not able to grab information"
 
-        print "Grabbing malc0de list..."
-        response = urllib2.urlopen('http://malc0de.com/bl/IP_Blacklist.txt')
-        malc0de_resp = response.read()
+        try:
+            print "Grabbing malc0de list..."
+            response = urllib2.urlopen('http://malc0de.com/bl/IP_Blacklist.txt')
+            malc0de_resp = response.read()
+        except NameError:
+            malc0de_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            malc0de_resp = "Not able to grab information"
 
-        print "Grabbing MalwareBytes list..."
-        response = urllib2.urlopen('http://hosts-file.net/rss.asp')
-        malbytes_resp = response.read()
+        try:
+            print "Grabbing MalwareBytes list..."
+            response = urllib2.urlopen('http://hosts-file.net/rss.asp')
+            malbytes_resp = response.read()
+        except NameError:
+            malbytes_resp = "Not able to grab information"
+        except urllib2.HTTPError:
+            malbytes_resp = "Not able to grab information"
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
