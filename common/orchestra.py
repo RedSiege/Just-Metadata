@@ -6,6 +6,7 @@ tool.
 '''
 
 
+import csv
 import glob
 import imp
 import os
@@ -43,6 +44,7 @@ class Conductor:
         # help_commands just contains commands to be used in the "shell"
         self.commands = {
             "analyze": "Run [module] on the loaded IP addresses",
+            "export" : "Exports all data on all IPs to CSV",
             "gather ": "Requests information and gathers statistics on loaded IP addresses",
             "help   ": "Displays commands and command descriptions",
             "import ": "Import's saved state into Just Metadata",
@@ -235,6 +237,28 @@ class Conductor:
                                 print helpers.color("[*] Error: The \"ip_info\" command requires an IP address!", warning=True)
                             self.user_command = ""
 
+                        # This will be the export command, used to export all information into a csv file
+                        elif self.user_command.startswith('export'):
+
+                            # Date and Time for export File
+                            current_date = time.strftime("%m/%d/%Y").replace("/", "")
+                            current_time = time.strftime("%H:%M:%S").replace(":", "")
+                            # True for printing the header on the first system
+                            # after that, only values
+                            add_header = True
+
+                            for path, ip_objd in self.ip_objects.iteritems():
+                                attrs = vars(ip_objd[0])
+                                with open('export_' + current_date + '_' + current_time + '.csv', 'a') as export_file:
+                                    csv_file = csv.DictWriter(export_file, attrs.keys())
+                                    if add_header:
+                                        csv_file.writeheader()
+                                        add_header = False
+                                    csv_file.writerow(attrs)
+
+                            print helpers.color("\nExport file saved to disk at export_" + current_date + "_" + current_time + ".csv")
+                            self.user_command = ""
+
                         elif self.user_command.startswith('analyze'):
                             try:
                                 hit_module = False
@@ -278,19 +302,19 @@ class Conductor:
                 print helpers.color("\n\n[!] You just rage quit...", warning=True)
                 sys.exit()
 
-            #except Exception as e:
-            #    print helpers.color("\n\n[!] Encountered Error!", warning=True)
-            #    print helpers.color(e)
-            #    print helpers.color("[!] Saving state to disk...", warning=True)
-            #    print helpers.color("[!] Please report this info to the developer!", warning=True)
-            #    current_date = time.strftime("%m/%d/%Y").replace("/", "")
-            #    current_time = time.strftime("%H:%M:%S").replace(":", "")
+            except Exception as e:
+                print helpers.color("\n\n[!] Encountered Error!", warning=True)
+                print helpers.color(e)
+                print helpers.color("[!] Saving state to disk...", warning=True)
+                print helpers.color("[!] Please report this info to the developer!", warning=True)
+                current_date = time.strftime("%m/%d/%Y").replace("/", "")
+                current_time = time.strftime("%H:%M:%S").replace(":", "")
 
                 # Save state to disk
-            #    pickle.dump(self.ip_objects, open(
-            #        'metadata' + current_date + "_" + current_time
-            #        + '.state', 'wb'))
-            #    print helpers.color("\nState saved to disk at metadata" + current_date + "_" + current_time + ".state")
+                pickle.dump(self.ip_objects, open(
+                    'metadata' + current_date + "_" + current_time
+                    + '.state', 'wb'))
+                print helpers.color("\nState saved to disk at metadata" + current_date + "_" + current_time + ".state")
 
         return
 

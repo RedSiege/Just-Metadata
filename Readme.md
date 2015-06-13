@@ -48,6 +48,8 @@ Ex: gather virustotal
 
 **ip_info &lt;IP Address&gt;** - This command is used to dump all information about a specific IP address.  This is currently being used after having run analysis modules.  For example, after identifying IP addresses that share the same SSH keys, I can dump all information about those IPs.  I will see if they have been used by malware, where they are located, etc.
 
+**export** - The export command will have Just-Metadata dump all information that's been gathered about all IP addresses currently loaded into the framework to CSV.
+
 ## Thanks
 
 Thanks to Justin Warner (@sixdub) for helping to give me some initial feedback, design ideas, and act as a sounding board during development!
