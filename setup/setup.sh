@@ -33,6 +33,8 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
+	# Finish Message
+	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
   ;;
   # Debian 7+ Dependency Installation
   Debian)
@@ -46,6 +48,8 @@ case ${osinfo} in
     pip install shodan
     pip install shodan --upgrade
     echo
+	# Finish Message
+	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
   ;;
   # Ubuntu (tested in 13.10) Dependency Installation
   Ubuntu)
@@ -60,8 +64,15 @@ case ${osinfo} in
     pip install shodan --upgrade
     echo
     echo
+	# Finish Message
+	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
+  ;;
+  *)
+  	echo '[!] Error:  Unable to recognize operating system.'
+	echo '[*] In order to use Just-Metadata, you must manually install '
+	echo '[*] and update pip, and the ipwhois, requests, and shodan python modules.'
+	echo
+  ;;
 esac
 
-# Finish Message
-echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
 echo
