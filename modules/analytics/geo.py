@@ -6,7 +6,7 @@ against the IPs loaded into the framework.
 
 class Analytics:
 
-    def __init__(self):
+    def __init__(self, cli_options):
         self.cli_name = "GeoInfo"
         self.description = "Analyzes IPs geographical/ISP information"
         self.top_number = 10

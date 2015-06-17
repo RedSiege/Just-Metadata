@@ -9,7 +9,7 @@ from common import helpers
 
 class Analytics:
 
-    def __init__(self):
+    def __init__(self, cli_options):
         self.cli_name = "TopPorts"
         self.description = "Returns the top \"X\" number of most used ports"
         self.top_number = 10

@@ -8,7 +8,7 @@ from common import helpers
 
 class Analytics:
 
-    def __init__(self):
+    def __init__(self, cli_options):
         self.cli_name = "Country"
         self.description = "Search for IPs by country of origin"
         self.country = ''

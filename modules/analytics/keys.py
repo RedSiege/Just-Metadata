@@ -9,7 +9,7 @@ from common import helpers
 
 class Analytics:
 
-    def __init__(self):
+    def __init__(self, cli_options):
         self.cli_name = "Keys"
         self.description = "Returns IP Addresses with shared public keys (SSH, SSL)"
         self.top_number = 10
