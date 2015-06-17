@@ -9,6 +9,8 @@ be extensible to easily add new functionality.
 
 from common import helpers
 from common import orchestra
+from colorama import init
+init()
 
 if __name__ == '__main__':
 
