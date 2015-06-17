@@ -11,7 +11,10 @@ class Analytics:
     def __init__(self, cli_options):
         self.cli_name = "Country"
         self.description = "Search for IPs by country of origin"
-        self.country = ''
+        if cli_options is None:
+            self.country = ''
+        else:
+            self.country = cli_options.analysis_string.lower()
 
     # This will sort the dictionary passed into it (or called on itself)
     def dict_sorter(self, data_dictionary):
@@ -19,9 +22,10 @@ class Analytics:
 
     def analyze(self, all_ip_objects):
 
-        print "Which country are you looking for??"
-        print "Ex: United States"
-        self.country = raw_input(' \n\n[>] Country: ').strip()
+        if self.country == '':
+            print "Which country are you looking for??"
+            print "Ex: United States"
+            self.country = raw_input(' \n\n[>] Country: ').strip()
 
         # Creating Dictionaries for top values
         ip_country = []

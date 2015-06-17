@@ -33,7 +33,7 @@ if __name__ == '__main__':
             '-l', '--load', metavar='Filename', default=None,
             help='File containing IPs to load')
         load_options.add_argument(
-            '-f', '--file-import', metavar='Filename', default=None,
+            '-i', '--file-import', metavar='Filename', default=None,
             help='Previously saved state to load')
 
         module_options = parser.add_argument_group('List modules')
@@ -53,13 +53,13 @@ if __name__ == '__main__':
 
         analyze_options = parser.add_argument_group('Analysis Modules')
         analyze_options.add_argument(
-            '-a', '--analysis', metavar='[analysis module]',
+            '-a', '--analyze', metavar='[analysis module]', default=None,
             help='Analysis module to run')
         analyze_options.add_argument(
-            '--analysis-number', metavar='Answer to Analysis prompt', default=None,
+            '--analysis-number', metavar='Answer to Analysis prompt', default=10,
             help='Answer to analysis prompt (Ex: How many IPs to return, port number, etc.)')
         analyze_options.add_argument(
-            '--analysis-string', metavar='Answer to Analysis prompt', default=None,
+            '--analysis-string', metavar='Answer to Analysis prompt', default='None',
             help='Answer to analysis prompt (Ex: What country are you searching for, etc.)')
 
         export_options = parser.add_argument_group('Export Options')
@@ -82,7 +82,7 @@ if __name__ == '__main__':
             print helpers.color("[*] Please re-run and provide a file!", warning=True)
             sys.exit()
 
-        if args.list.lower() != 'analysis' and args.list.lower() != 'gather':
+        if args.list is not None and args.list.lower() != 'analysis' and args.list.lower() != 'gather':
             print helpers.color("[*] The list options requires you to specify what to list!", warning=True)
             print helpers.color("[*] Ex: list analysis or list gather", warning=True)
             sys.exit()

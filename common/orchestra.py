@@ -159,7 +159,7 @@ class Conductor:
             if name.endswith(".py") and ("__init__" not in name):
                 loaded_analytics = imp.load_source(
                     name.replace("/", ".").rstrip('.py'), name)
-                self.analytical_transforms[name] = loaded_analytics.Analytics()
+                self.analytical_transforms[name] = loaded_analytics.Analytics(self.cli_args)
         return
 
     def menu_system(self):
@@ -181,20 +181,25 @@ class Conductor:
                             print helpers.color("[*] Ex: load /root/file.txt", warning=True)
                             sys.exit()
 
-                    if self.cli_args.i is not None:
-                        self.run_import_command(self.cli_args.i)
+                    if self.cli_args.file_import is not None:
+                        self.run_import_command(self.cli_args.file_import)
 
                     if self.cli_args.gather is not None:
                         self.run_gather_command(self.cli_args.gather)
 
                     if self.cli_args.save:
-                        self.save_state
+                        self.save_state()
+
+                    if self.cli_args.analyze is not None:
+                        self.run_analyze_command(self.cli_args.analyze)
 
                     if self.cli_args.ip_info is not None:
                         self.run_ipinfo_command(self.cli_args.ip_info)
 
                     if self.cli_args.export:
                         self.export_info()
+
+                    sys.exit()
 
                 else:
 
@@ -213,8 +218,12 @@ class Conductor:
                                 self.user_command = ""
 
                             elif self.user_command.startswith('gather'):
-                                self.run_gather_command(
-                                    self.user_command.split()[1])
+                                try:
+                                    self.run_gather_command(
+                                        self.user_command.split()[1])
+                                except IndexError:
+                                    print helpers.color("\n\n[*] Error: Module command requires a module to load!", warning=True)
+                                    print helpers.color("[*] Ex: gather geoinfo", warning=True)
                                 self.user_command = ""
 
                             elif self.user_command.startswith('help'):
@@ -234,13 +243,21 @@ class Conductor:
 
                             # Code for loading state from disk
                             elif self.user_command.startswith('import'):
-                                self.run_import_command(
-                                    self.user_command.split()[1])
+                                try:
+                                    self.run_import_command(
+                                        self.user_command.split()[1])
+                                except IndexError:
+                                    print helpers.color("[*] Error: Please provide path to file that will be imported.", warning=True)
+                                    print helpers.color("[*] Ex: import metadata1111_1111.state", warning=True)
                                 self.user_command = ""
 
                             elif self.user_command.startswith('ip_info'):
-                                self.run_ipinfo_command(
-                                    self.user_command.split()[1])
+                                try:
+                                    self.run_ipinfo_command(
+                                        self.user_command.split()[1])
+                                except IndexError:
+                                    print helpers.color("[*] Error: The \"ip_info\" command requires an IP address!", warning=True)
+                                    self.check_cli()
                                 self.user_command = ""
 
                             # This will be the export command, used to export
@@ -250,13 +267,21 @@ class Conductor:
                                 self.user_command = ""
 
                             elif self.user_command.startswith('analyze'):
-                                self.run_analyze_command(
-                                    self.user_command.split()[1])
+                                try:
+                                    self.run_analyze_command(
+                                        self.user_command.split()[1])
+                                except IndexError:
+                                    print helpers.color("\n\n[*] Error: Analyze command requires a module to load!", warning=True)
+                                    print helpers.color("[*] Ex: analyze GeoInfo", warning=True)
                                 self.user_command = ""
 
                             elif self.user_command.startswith('list'):
-                                self.run_list_command(
-                                    self.user_command.split()[1])
+                                try:
+                                    self.run_list_command(
+                                        self.user_command.split()[1])
+                                except IndexError:
+                                    print helpers.color("\n\n[*] Error: You did not provide module type to display!", warning=True)
+                                    print helpers.color("[*] Ex: list analysis", warning=True)
                                 self.user_command = ""
 
                             else:
@@ -267,12 +292,12 @@ class Conductor:
                 print helpers.color("\n\n[!] You just rage quit...", warning=True)
                 sys.exit()
 
-            except Exception as e:
-                print helpers.color("\n\n[!] Encountered Error!", warning=True)
-                print helpers.color(e)
-                print helpers.color("[!] Saving state to disk...", warning=True)
-                print helpers.color("[!] Please report this info to the developer!", warning=True)
-                self.save_state()
+            #except Exception as e:
+            #    print helpers.color("\n\n[!] Encountered Error!", warning=True)
+            #    print helpers.color(e)
+            #    print helpers.color("[!] Saving state to disk...", warning=True)
+            #    print helpers.color("[!] Please report this info to the developer!", warning=True)
+            #    self.save_state()
 
         return
 

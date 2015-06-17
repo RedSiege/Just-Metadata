@@ -9,7 +9,10 @@ class Analytics:
     def __init__(self, cli_options):
         self.cli_name = "GeoInfo"
         self.description = "Analyzes IPs geographical/ISP information"
-        self.top_number = 10
+        if cli_options is None:
+            self.top_number = ''
+        else:
+            self.top_number = int(cli_options.analysis_number)
 
     # This will sort the dictionary passed into it (or called on itself)
     def dict_sorter(self, data_dictionary):
@@ -17,9 +20,10 @@ class Analytics:
 
     def analyze(self, all_ip_objects):
 
-        print "You selected \"GeoInfo\" module, how many items do you want returned?"
-        print "Ex: 10"
-        self.top_number = int(raw_input(' \n\n[>] Return the Top: ').strip())
+        if self.top_number == '':
+            print "You selected \"GeoInfo\" module, how many items do you want returned?"
+            print "Ex: 10"
+            self.top_number = int(raw_input(' \n\n[>] Return the Top: ').strip())
 
         # Creating Dictionaries for top values
         top_countries = {}

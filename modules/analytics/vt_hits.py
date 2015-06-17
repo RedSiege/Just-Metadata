@@ -11,13 +11,17 @@ class Analytics:
     def __init__(self, cli_options):
         self.cli_name = "Virustotal"
         self.description = "Returns IP addresses with results in VirusTotal"
-        self.top_number = 10
+        if cli_options is None:
+            self.top_number = ''
+        else:
+            self.top_number = int(cli_options.analysis_number)
 
     def analyze(self, all_ip_objects):
 
-        print "You selected the \"Virustotal\" module, how many items do you want returned?"
-        print "Ex: 10"
-        self.top_number = int(raw_input(' \n\n[>] Return the Top: ').strip())
+        if self.top_number == '':
+            print "You selected the \"Virustotal\" module, how many items do you want returned?"
+            print "Ex: 10"
+            self.top_number = int(raw_input(' \n\n[>] Return the Top: ').strip())
 
         # format is {hash: [ip, ip]}
         unique_sha256 = {}

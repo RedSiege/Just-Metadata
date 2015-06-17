@@ -12,13 +12,17 @@ class Analytics:
     def __init__(self, cli_options):
         self.cli_name = "PortSearch"
         self.description = "Returns the top \"X\" number of most used ports"
-        self.port_search = 80
+        if cli_options is None:
+            self.port_search = ''
+        else:
+            self.port_search = int(cli_options.analysis_number)
 
     def analyze(self, all_ip_objects):
 
-        print "You selected the \"Port_search\" module, which port are you looking for?"
-        print "Ex: 80"
-        self.port_search = int(raw_input(' \n\n[>] Port: ').strip())
+        if self.port_search == '':
+            print "You selected the \"Port_search\" module, which port are you looking for?"
+            print "Ex: 80"
+            self.port_search = int(raw_input(' \n\n[>] Port: ').strip())
 
         top_ports = {}
 
