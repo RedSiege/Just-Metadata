@@ -56,8 +56,11 @@ if __name__ == '__main__':
             '-a', '--analysis', metavar='[analysis module]',
             help='Analysis module to run')
         analyze_options.add_argument(
-            '--analysis-answer', metavar='Answer to Analysis prompt',
-            help='Answer to analysis prompt (how many IPs to return, etc.)')
+            '--analysis-number', metavar='Answer to Analysis prompt', default=None,
+            help='Answer to analysis prompt (Ex: How many IPs to return, port number, etc.)')
+        analyze_options.add_argument(
+            '--analysis-string', metavar='Answer to Analysis prompt', default=None,
+            help='Answer to analysis prompt (Ex: What country are you searching for, etc.)')
 
         export_options = parser.add_argument_group('Export Options')
         export_options.add_argument(

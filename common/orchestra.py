@@ -243,33 +243,22 @@ class Conductor:
                                     self.user_command.split()[1])
                                 self.user_command = ""
 
-                            # This will be the export command, used to export all information into a csv file
+                            # This will be the export command, used to export
+                            # all information into a csv file
                             elif self.user_command.startswith('export'):
                                 self.export_info()
                                 self.user_command = ""
 
                             elif self.user_command.startswith('analyze'):
-                                try:
-                                    hit_module = False
-                                    for path, analytics_obj in self.analytical_transforms.iteritems():
-                                        if self.user_command.split()[1].lower() == 'all':
-                                            analytics_obj.analyze(self.ip_objects)
-                                            hit_module = True
-                                        elif self.user_command.split()[1].lower() == analytics_obj.cli_name.lower():
-                                            analytics_obj.analyze(self.ip_objects)
-                                            hit_module = True
-                                            break
-                                except IndexError:
-                                    print helpers.color("\n\n[*] Error: Analyze command requires a module to load!", warning=True)
-                                    print helpers.color("[*] Ex: analyze GeoInfo", warning=True)
-                                if not hit_module:
-                                    print helpers.color("\n\n[*] Error: You didn't provide a valid module!", warning=True)
-                                    print helpers.color("[*] Please re-run and use a valid module.", warning=True)
+                                self.run_analyze_command(
+                                    self.user_command.split()[1])
                                 self.user_command = ""
 
                             elif self.user_command.startswith('list'):
-                                self.run_list_command(self.user_command.split()[1])
+                                self.run_list_command(
+                                    self.user_command.split()[1])
                                 self.user_command = ""
+
                             else:
                                 print helpers.color("\n\n[*] Error: You did not provide a valid command!", warning=True)
                                 print helpers.color("[*] Type \"help\" to view valid commands", warning=True)
@@ -292,6 +281,27 @@ class Conductor:
         print
         for command, description in self.commands.iteritems():
             print command + " => " + description
+        return
+
+    def run_analyze_command(self, analyze_command):
+        try:
+            hit_module = False
+            for path, analytics_obj in self.analytical_transforms.iteritems():
+                if analyze_command.lower() == 'all':
+                    analytics_obj.analyze(self.ip_objects)
+                    hit_module = True
+                elif analyze_command.lower() == analytics_obj.cli_name.lower():
+                    analytics_obj.analyze(self.ip_objects)
+                    hit_module = True
+                    break
+        except IndexError:
+            print helpers.color("\n\n[*] Error: Analyze command requires a module to load!", warning=True)
+            print helpers.color("[*] Ex: analyze GeoInfo", warning=True)
+            self.check_cli()
+        if not hit_module:
+            print helpers.color("\n\n[*] Error: You didn't provide a valid module!", warning=True)
+            print helpers.color("[*] Please re-run and use a valid module.", warning=True)
+            self.check_cli()
         return
 
     def run_gather_command(self, gather_module):
