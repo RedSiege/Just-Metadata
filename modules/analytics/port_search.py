@@ -15,7 +15,7 @@ class Analytics:
         if cli_options is None:
             self.port_search = ''
         else:
-            self.port_search = int(cli_options.analysis_number)
+            self.port_search = int(cli_options.analyze_number)
 
     def analyze(self, all_ip_objects):
 

@@ -56,10 +56,10 @@ if __name__ == '__main__':
             '-a', '--analyze', metavar='[analysis module]', default=None,
             help='Analysis module to run')
         analyze_options.add_argument(
-            '--analysis-number', metavar='Answer to Analysis prompt', default=10,
+            '--analyze-number', metavar='Answer to Analysis prompt', default=10,
             help='Answer to analysis prompt (Ex: How many IPs to return, port number, etc.)')
         analyze_options.add_argument(
-            '--analysis-string', metavar='Answer to Analysis prompt', default='None',
+            '--analyze-string', metavar='Answer to Analysis prompt', default='None',
             help='Answer to analysis prompt (Ex: What country are you searching for, etc.)')
 
         export_options = parser.add_argument_group('Export Options')
@@ -77,14 +77,14 @@ if __name__ == '__main__':
             parser.print_help()
             sys.exit()
 
-        if args.load is None and args.file_import is None:
-            print helpers.color("[*] You did not provide a file with IPs, or state to load!", warning=True)
-            print helpers.color("[*] Please re-run and provide a file!", warning=True)
-            sys.exit()
-
         if args.list is not None and args.list.lower() != 'analysis' and args.list.lower() != 'gather':
             print helpers.color("[*] The list options requires you to specify what to list!", warning=True)
             print helpers.color("[*] Ex: list analysis or list gather", warning=True)
+            sys.exit()
+
+        if args.load is None and args.file_import is None and args.list is None:
+            print helpers.color("[*] You did not provide a file with IPs, or state to load!", warning=True)
+            print helpers.color("[*] Please re-run and provide a file!", warning=True)
             sys.exit()
 
     # instantiate the orchesta object and call the main menubar

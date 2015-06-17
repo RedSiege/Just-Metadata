@@ -170,7 +170,7 @@ class Conductor:
 
                 if self.cli_args is not None:
 
-                    if self.user_command.startswith('list'):
+                    if self.cli_args.list is not None:
                         self.run_list_command(self.cli_args.list)
 
                     if self.cli_args.load is not None:
@@ -280,7 +280,7 @@ class Conductor:
                                     self.run_list_command(
                                         self.user_command.split()[1])
                                 except IndexError:
-                                    print helpers.color("\n\n[*] Error: You did not provide module type to display!", warning=True)
+                                    print helpers.color("\n\n[*] Error: You did not provide a module type to display!", warning=True)
                                     print helpers.color("[*] Ex: list analysis", warning=True)
                                 self.user_command = ""
 
@@ -398,7 +398,7 @@ class Conductor:
 
     def run_list_command(self, list_cmd):
         try:
-            if len(list_cmd) == 1:
+            if len(list_cmd.split()) == 1:
                 list_command = list_cmd
             else:
                 list_command = list_cmd.split()[1]

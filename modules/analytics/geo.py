@@ -12,7 +12,7 @@ class Analytics:
         if cli_options is None:
             self.top_number = ''
         else:
-            self.top_number = int(cli_options.analysis_number)
+            self.top_number = int(cli_options.analyze_number)
 
     # This will sort the dictionary passed into it (or called on itself)
     def dict_sorter(self, data_dictionary):

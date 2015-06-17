@@ -14,7 +14,7 @@ class Analytics:
         if cli_options is None:
             self.country = ''
         else:
-            self.country = cli_options.analysis_string.lower()
+            self.country = cli_options.analyze_string.lower()
 
     # This will sort the dictionary passed into it (or called on itself)
     def dict_sorter(self, data_dictionary):
