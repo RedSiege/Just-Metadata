@@ -292,12 +292,12 @@ class Conductor:
                 print helpers.color("\n\n[!] You just rage quit...", warning=True)
                 sys.exit()
 
-            #except Exception as e:
-            #    print helpers.color("\n\n[!] Encountered Error!", warning=True)
-            #    print helpers.color(e)
-            #    print helpers.color("[!] Saving state to disk...", warning=True)
-            #    print helpers.color("[!] Please report this info to the developer!", warning=True)
-            #    self.save_state()
+            except Exception as e:
+                print helpers.color("\n\n[!] Encountered Error!", warning=True)
+                print helpers.color(e)
+                print helpers.color("[!] Saving state to disk...", warning=True)
+                print helpers.color("[!] Please report this info to the developer!", warning=True)
+                self.save_state()
 
         return
 
