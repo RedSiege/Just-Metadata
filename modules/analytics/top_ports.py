@@ -9,16 +9,20 @@ from common import helpers
 
 class Analytics:
 
-    def __init__(self):
+    def __init__(self, cli_options):
         self.cli_name = "TopPorts"
         self.description = "Returns the top \"X\" number of most used ports"
-        self.top_number = 10
+        if cli_options is None:
+            self.top_number = ''
+        else:
+            self.top_number = int(cli_options.analyze_number)
 
     def analyze(self, all_ip_objects):
 
-        print "You selected the \"Top_Ports\" module, how many ports do you want returned?"
-        print "Ex: 10"
-        self.top_number = int(raw_input(' \n\n[>] Total: ').strip())
+        if self.top_number == '':
+            print "You selected the \"Top_Ports\" module, how many ports do you want returned?"
+            print "Ex: 10"
+            self.top_number = int(raw_input(' \n\n[>] Total: ').strip())
 
         top_ports = {}
 
