@@ -13,6 +13,7 @@ import os
 import pickle
 import sys
 import time
+import colorama
 from common import helpers
 from common import ip_object
 from modules.analytics import *
@@ -142,8 +143,8 @@ class Conductor:
             print helpers.color("[*] Loaded " + str(total_ips) + " IPs")
 
         else:
-            print "[*] Error: Invalid file path provided!"
-            print "[*] Error: Please provide the valid path to a file."
+            print helpers.color("\n\n[*] Error: Invalid file path provided!", warning=True)
+            print helpers.color("[*] Error: Please provide the valid path to a file.", warning=True)
         return
 
     def load_intelgathering_functions(self):
@@ -163,6 +164,9 @@ class Conductor:
         return
 
     def menu_system(self):
+
+        # Reinitialize colorama as sys.stdout/stderr may have changed since program started
+        colorama.reinit()
 
         while self.user_command == "":
 
@@ -232,7 +236,7 @@ class Conductor:
 
                             elif self.user_command.startswith('exit'):
                                 print helpers.color(
-                                    "\n\n[!] Exiting Just Metadata..",
+                                    "\n\n[!] Exiting Just Metadata..\n",
                                     warning=True)
                                 sys.exit()
 
