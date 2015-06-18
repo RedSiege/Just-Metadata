@@ -8,7 +8,7 @@ from common import helpers
 
 class Analytics:
 
-    def __init__(self):
+    def __init__(self, cli_options):
         self.cli_name = "FeedHits"
         self.description = "Lists IPs being tracked in threat lists"
         self.tor_exit = []
