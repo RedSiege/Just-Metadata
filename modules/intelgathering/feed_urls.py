@@ -61,7 +61,7 @@ class IntelGather:
             req = urllib2.Request(
                 'http://reputation.alienvault.com/reputation.data')
             req.add_header(
-                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+                'User-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36')
             response = urllib2.urlopen(req)
             alientvault_resp = response.read()
         except NameError:
@@ -108,17 +108,17 @@ class IntelGather:
         except urllib2.HTTPError:
             drag_vnc_resp = "Not able to grab information"
 
-        try:
-            print "Grabbing OpenBlock IP list..."
-            req = urllib2.Request('http://www.openbl.org/lists/date_all.txt')
-            req.add_header(
-                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
-            response = urllib2.urlopen(req)
-            openblock_resp = response.read()
-        except NameError:
-            openblock_resp = "Not able to grab information"
-        except urllib2.HTTPError:
-            openblock_resp = "Not able to grab information"
+        #try:
+        #    print "Grabbing OpenBlock IP list..."
+        #    req = urllib2.Request('http://www.openbl.org/lists/date_all.txt')
+        #    req.add_header(
+        #        'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+        #    response = urllib2.urlopen(req)
+        #    openblock_resp = response.read()
+        #except NameError:
+        #    openblock_resp = "Not able to grab information"
+        #except urllib2.HTTPError:
+        #    openblock_resp = "Not able to grab information"
 
         try:
             print "Grabbing NoThinkMalware list..."
@@ -239,11 +239,11 @@ class IntelGather:
                 else:
                     incoming_ip_obj[0].dragon_vnc = False
 
-            if incoming_ip_obj[0].openblock is "":
-                if incoming_ip_obj[0].ip_address in openblock_resp:
-                    incoming_ip_obj[0].openblock = True
-                else:
-                    incoming_ip_obj[0].openblock = False
+            #if incoming_ip_obj[0].openblock is "":
+            #    if incoming_ip_obj[0].ip_address in openblock_resp:
+            #        incoming_ip_obj[0].openblock = True
+            #    else:
+            #        incoming_ip_obj[0].openblock = False
 
             if incoming_ip_obj[0].nothink_malware is "":
                 if incoming_ip_obj[0].ip_address in ntmalware_resp:
