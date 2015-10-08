@@ -384,7 +384,7 @@ class Conductor:
         ip_found = False
         try:
             for path, ip_objd in self.ip_objects.iteritems():
-                if ip_objd[0].ip_address == ip_addr:
+                if ip_objd[0].ip_address == ip_addr or ip_addr.lower() == 'all':
                     attrs = vars(ip_objd[0])
                     print ip_objd[0].ip_address
                     print "*" * 25
