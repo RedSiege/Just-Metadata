@@ -1,8 +1,6 @@
 '''
-This module finds all systems that have the same public keys (https or ssh)
+This module finds assigned CIDR netblocks that are similar across loaded ips
 '''
-
-# No available information within Shodan about 190.90.112.8
 
 from common import helpers
 
