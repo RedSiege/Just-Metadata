@@ -88,11 +88,11 @@ class Analytics:
             list_counter += 1
         print
 
-        # Iterate over shared https public keys
+        # Iterate over shared https certificates
         sorted_https_keys = self.dict_sorter(https_keys)
         list_counter = 1
         print "*" * 70
-        print helpers.color(" " * 20 + "Shared HTTPS Public Keys" + " " * 20)
+        print helpers.color(" " * 20 + "Shared HTTPS Certificates" + " " * 20)
         print "*" * 70
         while ((list_counter <= self.top_number) and ((list_counter -1) != len(sorted_https_keys))):
             sorted_https_tuple = sorted_https_keys[-list_counter]
