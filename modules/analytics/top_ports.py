@@ -1,5 +1,5 @@
 '''
-This module finds all systems that have the same public keys (https or ssh)
+This module displays the top X number of most used ports.
 '''
 
 # No available information within Shodan about 190.90.112.8
