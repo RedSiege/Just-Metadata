@@ -98,7 +98,7 @@ class Analytics:
             sorted_https_tuple = sorted_https_keys[-list_counter]
             print sorted_https_tuple[0]
             print "*" * 64
-            print "HTTPS Public Key is shared across the following IPs: "
+            print "HTTPS Certificate is shared across the following IPs: "
             for ip in sorted_https_tuple[1]:
                 print helpers.color(ip)
             print "\n"
