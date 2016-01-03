@@ -28,7 +28,7 @@ class Conductor:
         # IP Object module will be where all IPs and their objects (with info)
         # about them will be stored
         # Stored in following format {'IPAddress': [IP_Object, # Instances of IP]}
-        self.self.system_objects = {}
+        self.system_objects = {}
 
         # Intel gathering transforms is used to gather information about the
         # loaded IPs
