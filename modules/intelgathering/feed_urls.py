@@ -197,88 +197,90 @@ class IntelGather:
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
-            if incoming_ip_obj[0].tor_exit is "":
-                if incoming_ip_obj[0].ip_address in tor_response:
-                    incoming_ip_obj[0].tor_exit = True
-                else:
-                    incoming_ip_obj[0].tor_exit = False
+            if incoming_ip_obj[0].ip_address != "":
 
-            if incoming_ip_obj[0].animus_data is "":
-                if incoming_ip_obj[0].ip_address in animus_lines:
-                    incoming_ip_obj[0].animus_data = True
-                else:
-                    incoming_ip_obj[0].animus_data = False
+                if incoming_ip_obj[0].tor_exit is "":
+                    if incoming_ip_obj[0].ip_address in tor_response:
+                        incoming_ip_obj[0].tor_exit = True
+                    else:
+                        incoming_ip_obj[0].tor_exit = False
 
-            if incoming_ip_obj[0].emerging_threat is "":
-                if incoming_ip_obj[0].ip_address in ethreats_response:
-                    incoming_ip_obj[0].emerging_threat = True
-                else:
-                    incoming_ip_obj[0].emerging_threat = False
+                if incoming_ip_obj[0].animus_data is "":
+                    if incoming_ip_obj[0].ip_address in animus_lines:
+                        incoming_ip_obj[0].animus_data = True
+                    else:
+                        incoming_ip_obj[0].animus_data = False
 
-            if incoming_ip_obj[0].in_alienv is "":
-                if incoming_ip_obj[0].ip_address in alientvault_resp:
-                    incoming_ip_obj[0].in_alienv = True
-                else:
-                    incoming_ip_obj[0].in_alienv = False
+                if incoming_ip_obj[0].emerging_threat is "":
+                    if incoming_ip_obj[0].ip_address in ethreats_response:
+                        incoming_ip_obj[0].emerging_threat = True
+                    else:
+                        incoming_ip_obj[0].emerging_threat = False
 
-            if incoming_ip_obj[0].blocklist_de is "":
-                if incoming_ip_obj[0].ip_address in blocklist_resp:
-                    incoming_ip_obj[0].blocklist_de = True
-                else:
-                    incoming_ip_obj[0].blocklist_de = False
+                if incoming_ip_obj[0].in_alienv is "":
+                    if incoming_ip_obj[0].ip_address in alientvault_resp:
+                        incoming_ip_obj[0].in_alienv = True
+                    else:
+                        incoming_ip_obj[0].in_alienv = False
 
-            if incoming_ip_obj[0].dragon_ssh is "":
-                if incoming_ip_obj[0].ip_address in drag_ssh_resp:
-                    incoming_ip_obj[0].dragon_ssh = True
-                else:
-                    incoming_ip_obj[0].dragon_ssh = False
+                if incoming_ip_obj[0].blocklist_de is "":
+                    if incoming_ip_obj[0].ip_address in blocklist_resp:
+                        incoming_ip_obj[0].blocklist_de = True
+                    else:
+                        incoming_ip_obj[0].blocklist_de = False
 
-            if incoming_ip_obj[0].dragon_vnc is "":
-                if incoming_ip_obj[0].ip_address in drag_vnc_resp:
-                    incoming_ip_obj[0].dragon_vnc = True
-                else:
-                    incoming_ip_obj[0].dragon_vnc = False
+                if incoming_ip_obj[0].dragon_ssh is "":
+                    if incoming_ip_obj[0].ip_address in drag_ssh_resp:
+                        incoming_ip_obj[0].dragon_ssh = True
+                    else:
+                        incoming_ip_obj[0].dragon_ssh = False
 
-            #if incoming_ip_obj[0].openblock is "":
-            #    if incoming_ip_obj[0].ip_address in openblock_resp:
-            #        incoming_ip_obj[0].openblock = True
-            #    else:
-            #        incoming_ip_obj[0].openblock = False
+                if incoming_ip_obj[0].dragon_vnc is "":
+                    if incoming_ip_obj[0].ip_address in drag_vnc_resp:
+                        incoming_ip_obj[0].dragon_vnc = True
+                    else:
+                        incoming_ip_obj[0].dragon_vnc = False
 
-            if incoming_ip_obj[0].nothink_malware is "":
-                if incoming_ip_obj[0].ip_address in ntmalware_resp:
-                    incoming_ip_obj[0].nothink_malware = True
-                else:
-                    incoming_ip_obj[0].nothink_malware = False
+                #if incoming_ip_obj[0].openblock is "":
+                #    if incoming_ip_obj[0].ip_address in openblock_resp:
+                #        incoming_ip_obj[0].openblock = True
+                #    else:
+                #        incoming_ip_obj[0].openblock = False
 
-            if incoming_ip_obj[0].nothink_ssh is "":
-                if incoming_ip_obj[0].ip_address in ntssh_resp:
-                    incoming_ip_obj[0].nothink_ssh = True
-                else:
-                    incoming_ip_obj[0].nothink_ssh = False
+                if incoming_ip_obj[0].nothink_malware is "":
+                    if incoming_ip_obj[0].ip_address in ntmalware_resp:
+                        incoming_ip_obj[0].nothink_malware = True
+                    else:
+                        incoming_ip_obj[0].nothink_malware = False
 
-            if incoming_ip_obj[0].feodo is "":
-                if incoming_ip_obj[0].ip_address in feodo_resp:
-                    incoming_ip_obj[0].feodo = True
-                else:
-                    incoming_ip_obj[0].feodo = False
+                if incoming_ip_obj[0].nothink_ssh is "":
+                    if incoming_ip_obj[0].ip_address in ntssh_resp:
+                        incoming_ip_obj[0].nothink_ssh = True
+                    else:
+                        incoming_ip_obj[0].nothink_ssh = False
 
-            if incoming_ip_obj[0].antispam is "":
-                if incoming_ip_obj[0].ip_address in antispam_resp:
-                    incoming_ip_obj[0].antispam = True
-                else:
-                    incoming_ip_obj[0].antispam = False
+                if incoming_ip_obj[0].feodo is "":
+                    if incoming_ip_obj[0].ip_address in feodo_resp:
+                        incoming_ip_obj[0].feodo = True
+                    else:
+                        incoming_ip_obj[0].feodo = False
 
-            if incoming_ip_obj[0].malc0de is "":
-                if incoming_ip_obj[0].ip_address in malc0de_resp:
-                    incoming_ip_obj[0].malc0de = True
-                else:
-                    incoming_ip_obj[0].malc0de = False
+                if incoming_ip_obj[0].antispam is "":
+                    if incoming_ip_obj[0].ip_address in antispam_resp:
+                        incoming_ip_obj[0].antispam = True
+                    else:
+                        incoming_ip_obj[0].antispam = False
 
-            if incoming_ip_obj[0].malwarebytes is "":
-                if incoming_ip_obj[0].ip_address in malbytes_resp:
-                    incoming_ip_obj[0].malwarebytes = True
-                else:
-                    incoming_ip_obj[0].malwarebytes = False
+                if incoming_ip_obj[0].malc0de is "":
+                    if incoming_ip_obj[0].ip_address in malc0de_resp:
+                        incoming_ip_obj[0].malc0de = True
+                    else:
+                        incoming_ip_obj[0].malc0de = False
+
+                if incoming_ip_obj[0].malwarebytes is "":
+                    if incoming_ip_obj[0].ip_address in malbytes_resp:
+                        incoming_ip_obj[0].malwarebytes = True
+                    else:
+                        incoming_ip_obj[0].malwarebytes = False
 
         return
