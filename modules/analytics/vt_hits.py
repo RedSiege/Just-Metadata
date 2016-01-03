@@ -87,12 +87,12 @@ class Analytics:
                         referrer_samples[item3['sha256'].encode('utf-8')] = [value[0].ip_address]
 
             if type(value[0].virustotal_domain) is dict and \
-                    "detected_urls" in value[0].virustotal.domain:
-                for single_url in value[0].virustotal_domain["detected_urls"]:
-                    if single_url in vt_detected_domains:
-                        vt_detected_domains[single_url] = vt_detected_domains[single_url] + [value[0].domain_name]
+                    "detected_urls" in value[0].virustotal_domain:
+                for single_url in value[0].virustotal_domain['detected_urls']:
+                    if single_url['url'] in vt_detected_domains:
+                        vt_detected_domains[single_url['url']] = vt_detected_domains[single_url['url']] + [value[0].domain_name]
                     else:
-                        vt_detected_domains[single_url] = [value[0].domain_name]
+                        vt_detected_domains[single_url['url']] = [value[0].domain_name]
                     if value[0].domain_name in total_detected_domains:
                         total_detected_domains[value[0].domain_name] += 1
                     else:
@@ -244,7 +244,7 @@ class Analytics:
             list_counter += 1
         print
         print "*" * 70
-        print helpers.color(" " * 20 + "IPs and Total Detected Communicating URLs" + " " * 20)
+        print helpers.color(" " * 15 + "IPs and Total Detected Communicating URLs" + " " * 25)
         print "*" * 70
         sorted_total_detected_domains = self.dict_sorter2(total_detected_domains)
         list_counter = 1

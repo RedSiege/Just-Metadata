@@ -14,7 +14,7 @@ class IP_Information:
 
     def __init__(self, incoming_system):
         self.ip_address = ""
-        self.domain_name
+        self.domain_name = ""
         self.ip_country = ""
         self.ip_country_code = ""
         self.ip_city = ""
