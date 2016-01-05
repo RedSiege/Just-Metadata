@@ -34,5 +34,5 @@ class IntelGather:
                             response = urllib2.urlopen(req)
                             incoming_ip_obj[0].mywot = json.loads(response.read())
                         except urllib2.HTTPError:
-                            incoming_ip_obj[0].mywot = "Not able to grab information"
+                            pass
         return
