@@ -4,9 +4,12 @@ if the IP is in any of the feeds.
 
 List of feeds came from the isthisipbad project - go check it out!
 https://github.com/jgamblin/isthisipbad
+
+Additional feed from stopforumspam added by nicolasvillatte
 '''
 
-import urllib2
+import urllib2,string
+from xml.etree.ElementTree import XML
 
 
 class IntelGather:
@@ -61,7 +64,8 @@ class IntelGather:
             req = urllib2.Request(
                 'http://reputation.alienvault.com/reputation.data')
             req.add_header(
-                'User-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36')
+                'User-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.
+0.2454.101 Safari/537.36')
             response = urllib2.urlopen(req)
             alientvault_resp = response.read()
         except NameError:
@@ -148,8 +152,8 @@ class IntelGather:
 
         try:
             print "Grabbing Feodo list..."
-            req = urllib2.Request(
-                'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
+            req = urllib2.Request('https://feodotracker.abuse.ch/blocklist/?download=ipblocklist')
+                #'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
             req.add_header(
                 'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
             response = urllib2.urlopen(req)
@@ -194,6 +198,8 @@ class IntelGather:
             malbytes_resp = "Not able to grab information"
         except urllib2.HTTPError:
             malbytes_resp = "Not able to grab information"
+
+        print "Testing stopforumspam API..."
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
@@ -280,5 +286,21 @@ class IntelGather:
                     incoming_ip_obj[0].malwarebytes = True
                 else:
                     incoming_ip_obj[0].malwarebytes = False
+
+            try:
+                req = urllib2.Request('http://api.stopforumspam.org/api?ip=' + incoming_ip_obj[0].ip_address)
+                req.add_header('User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+                response = urllib2.urlopen(req)
+                xmlresponse = response.read()
+                stopforumspam_resp = XML(xmlresponse).find('appears').text
+            except NameError:
+                stopforumspam_resp = "Not able to grab information"
+            except urllib2.HTTPError:
+                stopforumspam_resp = "Not able to grab information"
+            if incoming_ip_obj[0].stopforumspam is "":
+                if stopforumspam_resp == "yes":
+                    incoming_ip_obj[0].stopforumspam = True
+                else:
+                    incoming_ip_obj[0].stopforumspam = False
 
         return
