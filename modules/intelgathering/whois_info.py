@@ -3,7 +3,7 @@ This is a module that can gathers whois information about the
 loaded IP addresses
 '''
 
-from ipwhois.ipwhois import IPDefinedError
+from ipwhois.exceptions import IPDefinedError
 from ipwhois import IPWhois
 from common import helpers
 
