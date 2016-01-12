@@ -39,3 +39,4 @@ class IP_Information:
         self.antispam = ""
         self.malc0de = ""
         self.malwarebytes = ""
+        self.stopforumspam = ""
