@@ -63,9 +63,10 @@ class IntelGather:
                         if decoded_json['org'].encode('utf-8') is not '':
                             incoming_ip_obj[0].ip_organization = decoded_json['org'].encode('utf-8')
 
-                    # Sleep is here to make sure we don't go over API limits
-                    time.sleep(.25)
                 except urllib2.URLError:
                     print helpers.color("[!] Cannot receive IP Geo Information from source!", warning=True)
                     print helpers.color("[!] Moving to the next IP address...", warning=True)
+
+                # Sleep is here to make sure we don't go over API limits
+                time.sleep(.5)
         return

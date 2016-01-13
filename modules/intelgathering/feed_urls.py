@@ -6,7 +6,7 @@ List of feeds came from the isthisipbad project - go check it out!
 https://github.com/jgamblin/isthisipbad
 '''
 
-import urllib2,string
+import urllib2
 from xml.etree.ElementTree import XML
 
 
@@ -149,8 +149,13 @@ class IntelGather:
 
         try:
             print "Grabbing Feodo list..."
-            req = urllib2.Request('https://feodotracker.abuse.ch/blocklist/?download=ipblocklist')
-                #'http://rules.emergingthreats.net/blockrules/compromised-ips.txt')
+<<<<<<< HEAD
+
+
+=======
+            req = urllib2.Request(
+                'https://feodotracker.abuse.ch/blocklist/?download=ipblocklist')
+>>>>>>> upstream/master
             req.add_header(
                 'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
             response = urllib2.urlopen(req)
@@ -196,7 +201,7 @@ class IntelGather:
         except urllib2.HTTPError:
             malbytes_resp = "Not able to grab information"
 
-        print "Testing stopforumspam API..."
+
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
@@ -284,20 +289,20 @@ class IntelGather:
                 else:
                     incoming_ip_obj[0].malwarebytes = False
                     
-            try:
-                req = urllib2.Request('http://api.stopforumspam.org/api?ip=' + incoming_ip_obj[0].ip_address)
-                req.add_header('User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
-                response = urllib2.urlopen(req)
-                xmlresponse = response.read()
-                stopforumspam_resp = XML(xmlresponse).find('appears').text
-            except NameError:
-                stopforumspam_resp = "Not able to grab information"
-            except urllib2.HTTPError:
-                stopforumspam_resp = "Not able to grab information"
-            if incoming_ip_obj[0].stopforumspam is "":
-                if stopforumspam_resp == "yes":
-                    incoming_ip_obj[0].stopforumspam = True
-                else:
-                    incoming_ip_obj[0].stopforumspam = False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return

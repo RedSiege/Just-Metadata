@@ -27,6 +27,7 @@ case ${osinfo} in
   Kali)
     echo '[*] Installing Kali Dependencies'
     apt-get install -y python-pip
+    easy_install -U pip
     pip install ipwhois
     pip install ipwhois --upgrade
     pip install requests
