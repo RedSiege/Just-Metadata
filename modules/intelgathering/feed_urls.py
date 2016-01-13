@@ -201,7 +201,7 @@ class IntelGather:
         except urllib2.HTTPError:
             malbytes_resp = "Not able to grab information"
 
-	if MISP_authorization is "" or MISP_address is "":
+	if MISP_authkey is "" or MISP_address is "":
 	    print "You did not define your MISP server address and Authentication Key"
 	else:
 	    try:
