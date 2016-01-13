@@ -4,8 +4,6 @@ if the IP is in any of the feeds.
 
 List of feeds came from the isthisipbad project - go check it out!
 https://github.com/jgamblin/isthisipbad
-
-Additional feed from stopforumspam added by nicolasvillatte
 '''
 
 import urllib2,string
