@@ -324,6 +324,7 @@ class IntelGather:
                 if incoming_ip_obj[0].ip_address in MISP_ip_src_resp:
                     incoming_ip_obj[0].MISP_ip_src = True
                 else:
+                    incoming_ip_obj[0].MISP_ip_src = False
 
             try:
 	    	print "Checking stopforumspam for " + incoming_ip_obj[0].ip_address
