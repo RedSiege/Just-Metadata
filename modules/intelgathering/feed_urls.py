@@ -202,7 +202,7 @@ class IntelGather:
             malbytes_resp = "Not able to grab information"
 
 	if MISP_authkey is "" or MISP_address is "":
-	    print "You did not define your MISP server address and Authentication Key"
+	    print "You did not define your MISP server address or Authorization Key"
 	else:
 	    try:
 		print "Grabbing MISP ip-dst @ " + MISP_address
