@@ -7,7 +7,6 @@ https://github.com/jgamblin/isthisipbad
 '''
 
 import urllib2
-from xml.etree.ElementTree import XML
 
 
 class IntelGather:
@@ -149,13 +148,8 @@ class IntelGather:
 
         try:
             print "Grabbing Feodo list..."
-<<<<<<< HEAD
-
-
-=======
             req = urllib2.Request(
                 'https://feodotracker.abuse.ch/blocklist/?download=ipblocklist')
->>>>>>> upstream/master
             req.add_header(
                 'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
             response = urllib2.urlopen(req)
@@ -289,20 +283,4 @@ class IntelGather:
                 else:
                     incoming_ip_obj[0].malwarebytes = False
                     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return
