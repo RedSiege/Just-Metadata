@@ -198,8 +198,6 @@ class IntelGather:
         except urllib2.HTTPError:
             malbytes_resp = "Not able to grab information"
 
-
-
         for path, incoming_ip_obj in all_ips.iteritems():
 
             if incoming_ip_obj[0].tor_exit is "":
