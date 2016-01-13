@@ -315,16 +315,18 @@ class IntelGather:
                     incoming_ip_obj[0].malwarebytes = False
 
             if incoming_ip_obj[0].MISP_ip_dst is "":
-                if incoming_ip_obj[0].ip_address in MISP_ip_dst_resp:
-                    incoming_ip_obj[0].MISP_ip_dst = True
-                else:
-                    incoming_ip_obj[0].MISP_ip_dst = False
+		if MISP_authkey and MISP_address:
+                    if incoming_ip_obj[0].ip_address in MISP_ip_dst_resp:
+			incoming_ip_obj[0].MISP_ip_dst = True
+                    else:
+			incoming_ip_obj[0].MISP_ip_dst = False
 
             if incoming_ip_obj[0].MISP_ip_src is "":
-                if incoming_ip_obj[0].ip_address in MISP_ip_src_resp:
-                    incoming_ip_obj[0].MISP_ip_src = True
-                else:
-                    incoming_ip_obj[0].MISP_ip_src = False
+		if MISP_authkey and MISP_address:
+                    if incoming_ip_obj[0].ip_address in MISP_ip_src_resp:
+            		incoming_ip_obj[0].MISP_ip_src = True
+                    else:
+            		incoming_ip_obj[0].MISP_ip_src = False
 
             try:
 	    	print "Checking stopforumspam for " + incoming_ip_obj[0].ip_address
