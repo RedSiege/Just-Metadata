@@ -6,6 +6,9 @@ List of feeds came from the isthisipbad project - go check it out!
 https://github.com/jgamblin/isthisipbad
 
 Additional feeds added: stopforumspam, MISP
+To Add: 
+	NiX spam DNSBL (http://www.dnsbl.manitu.net/lookup.php?language=en&value= or /download/nixspam-ip.dump.gz) check if not redundant with stopforumspam
+	AlienVault Reputation Data Feed (https://www.alienvault.com/apps/api/threat/ip/93.183.247.155/?format=json)
 '''
 
 import urllib2
@@ -22,6 +25,8 @@ class IntelGather:
 
 	MISP_authkey = ""
 	MISP_address = "https://misppriv.circl.lu"
+	OTX_token = ""
+	OTX_address = "https://www.alienvault.com/apps/api/threat/ip/"
 
         try:
             print "Grabbing list of TOR exit nodes.."
@@ -343,5 +348,10 @@ class IntelGather:
 		    incoming_ip_obj[0].stopforumspam = True
 		else:
 		    incoming_ip_obj[0].stopforumspam = False
+# try:
+# except
+# except
+# if
+#$ip + "/?format=json"
 
         return
