@@ -39,3 +39,6 @@ class IP_Information:
         self.antispam = ""
         self.malc0de = ""
         self.malwarebytes = ""
+	self.MISP_ip_dst = ""
+	self.MISP_ip_src = ""
+	self.stopforumspam = ""
