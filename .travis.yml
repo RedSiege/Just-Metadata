@@ -3,6 +3,6 @@ python:
   - "2.7"
 script:
   - "cd setup"
-  - "sudo setup.sh"
+  - "sudo ./setup.sh"
   - "cd .."
-  - "./Just-Metadata.py" 
+  - "python Just-Metadata.py" 
