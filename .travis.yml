@@ -5,4 +5,4 @@ script:
   - "cd setup"
   - "sudo ./setup.sh"
   - "cd .."
-  - "python Just-Metadata.py" 
+  - "python JustMetadata.py -h"
