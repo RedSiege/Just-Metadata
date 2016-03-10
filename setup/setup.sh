@@ -48,7 +48,6 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
-    apt-get install python-colorama
     echo
 	# Finish Message
 	echo '[*] Setup script completed successfully on Debian, enjoy Just-Metadata! :)'
@@ -58,13 +57,13 @@ case ${osinfo} in
     echo '[*] Installing Ubuntu Dependencies'
     apt-get install -y python-pip
     easy_install -U pip
+    pip install colorama
     pip install ipwhois
     pip install ipwhois --upgrade
     pip install requests
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
-    sudo pip install colorama
     echo
     echo
 	# Finish Message
