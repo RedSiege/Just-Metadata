@@ -1,8 +1,11 @@
+sudo: required
+dist: trusty
 language: python
 python:
   - "2.7"
+install: "pip install colorama"
 script:
   - "cd setup"
   - "sudo ./setup.sh"
   - "cd .."
-  - "python Just-Metadata.py" 
+  - "python JustMetadata.py -h"
