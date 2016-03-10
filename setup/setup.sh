@@ -64,7 +64,7 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
-    apt-get install python-colorama
+    sudo pip install colorama
     echo
     echo
 	# Finish Message
