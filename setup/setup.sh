@@ -48,11 +48,10 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
-    pip install colorama
-    pip install colorama --upgrade
+    apt-get install python-colorama
     echo
 	# Finish Message
-	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
+	echo '[*] Setup script completed successfully on Debian, enjoy Just-Metadata! :)'
   ;;
   # Ubuntu (tested in 13.10) Dependency Installation
   Ubuntu)
@@ -65,12 +64,11 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
-    pip install colorama
-    pip install colorama --upgrade
+    apt-get install python-colorama
     echo
     echo
 	# Finish Message
-	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
+	echo '[*] Setup script completed successfully on Ubuntu, enjoy Just-Metadata! :)'
   ;;
   *)
   	echo '[!] Error:  Unable to recognize operating system.'
