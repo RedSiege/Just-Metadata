@@ -69,6 +69,7 @@ case ${osinfo} in
 	# Finish Message
 	echo '[*] Setup script completed successfully on Ubuntu, enjoy Just-Metadata! :)'
 	uname -a
+	cat /etc/issue
   ;;
   *)
   	echo '[!] Error:  Unable to recognize operating system.'
