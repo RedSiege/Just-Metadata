@@ -23,7 +23,7 @@ class IntelGather:
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
-            if incoming_ip_obj[0].ip_country == "" and incoming_ip_obj[0].ip_city == "" and incoming_ip_obj[0].ip_isp == "" and incoming_ip_obj[0].ip_latitude == "":
+            if incoming_ip_obj[0].ip_address != "" and incoming_ip_obj[0].ip_country == "":
 
                 # Make request for information about IPs
                 print "Getting info on... " + incoming_ip_obj[0].ip_address

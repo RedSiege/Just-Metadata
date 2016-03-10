@@ -18,7 +18,7 @@ class IntelGather:
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
-            if incoming_ip_obj[0].ip_whois == "":
+            if incoming_ip_obj[0].ip_whois == "" and incoming_ip_obj[0].ip_address != "":
 
                 try:
                     print "Gathering whois information about " + incoming_ip_obj[0].ip_address
