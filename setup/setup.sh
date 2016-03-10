@@ -57,8 +57,7 @@ case ${osinfo} in
     echo '[*] Installing Ubuntu Dependencies'
     apt-get install -y python-pip
     easy_install -U pip
-    pip install colorama
-    pip install colorama --upgrade
+    papt-get install python-colorama
     pip install ipwhois
     pip install ipwhois --upgrade
     pip install requests
