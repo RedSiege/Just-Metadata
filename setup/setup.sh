@@ -48,6 +48,8 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
+    pip install colorama
+    pip install colorama --upgrade
     echo
 	# Finish Message
 	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
@@ -63,6 +65,8 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
+    pip install colorama
+    pip install colorama --upgrade
     echo
     echo
 	# Finish Message
