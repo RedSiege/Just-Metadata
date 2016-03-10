@@ -58,6 +58,7 @@ case ${osinfo} in
     apt-get install -y python-pip
     easy_install -U pip
     pip install colorama
+    pip install colorama --upgrade
     pip install ipwhois
     pip install ipwhois --upgrade
     pip install requests
@@ -68,8 +69,6 @@ case ${osinfo} in
     echo
 	# Finish Message
 	echo '[*] Setup script completed successfully on Ubuntu, enjoy Just-Metadata! :)'
-	uname -a
-	cat /etc/issue
   ;;
   *)
   	echo '[!] Error:  Unable to recognize operating system.'
