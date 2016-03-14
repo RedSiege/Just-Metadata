@@ -55,7 +55,6 @@ class Conductor:
             "ip_info": "Display's all info about an IP address",
             "load   ": "Loads IPs into the framework for analysis",
             "list   ": "Prints loaded [analysis] or [gather] modules",
-            "print  ": "Prints gathered info on the provided IP address",
             "save   ": "Saves IPs and attributes to disk for reloading in the future",
             "exit   ": "Exits out of Just-Metadata"
         }
