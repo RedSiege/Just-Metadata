@@ -25,11 +25,14 @@ class Analytics:
         top_cidrs = {}
 
         for single_ip in all_ip_objects.values():
-            if 'asn_cidr' in single_ip[0].ip_whois.keys():
-                if single_ip[0].ip_whois['asn_cidr'] in top_cidrs:
-                    top_cidrs[single_ip[0].ip_whois['asn_cidr']] += 1
-                else:
-                    top_cidrs[single_ip[0].ip_whois['asn_cidr']] = 1
+            try:
+                if 'asn_cidr' in single_ip[0].ip_whois.keys():
+                    if single_ip[0].ip_whois['asn_cidr'] in top_cidrs:
+                        top_cidrs[single_ip[0].ip_whois['asn_cidr']] += 1
+                    else:
+                        top_cidrs[single_ip[0].ip_whois['asn_cidr']] = 1
+            except AttributeError:
+                print helpers.color("Incorrect whois data format for " + single_ip[0].ip_address, warning=True)
 
         # Iterate over all ports
         sorted_top_cidrs = self.dict_sorter(top_cidrs)
