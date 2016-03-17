@@ -62,6 +62,8 @@ class IntelGather:
                     time.sleep(16)
                 except IOError:
                     print helpers.color("Error while connecting to Virustotal for " + incoming_ip_obj[0].ip_address, warning=True)
+                except ValueError:
+                    print helpers.color("Error loading JSON response for " + incoming_ip_obj[0].domain_name, warning=True)
 
             if incoming_ip_obj[0].domain_name != "" and incoming_ip_obj[0].virustotal_domain is '':
                 request_url = self.api_url + 'domain/report?'
