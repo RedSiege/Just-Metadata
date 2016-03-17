@@ -35,4 +35,6 @@ class IntelGather:
                             incoming_ip_obj[0].mywot = json.loads(response.read())
                         except urllib2.HTTPError:
                             pass
+                        except ValueError:
+                            print helpers.color("Error loading JSON response for " + incoming_ip_obj[0].domain_name, warning=True)
         return
