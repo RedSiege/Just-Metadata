@@ -1,8 +1,7 @@
 '''
-This module finds all systems that have the same public keys (https or ssh)
+This module searches the shodan data for IPs using a user-specified ssh-key
 '''
 
-# No available information within Shodan about 190.90.112.8
 
 from common import helpers
 
@@ -29,17 +28,12 @@ class Analytics:
                     if 'opts' in item:
                         if 'ssh' in item['opts']:
                             if 'key' in item['opts']['ssh']:
-                                if self.ssh_key in item['opts']['ssh']['key'].encode('utf-8').strip('\n').strip('\r'):
-                                    print helpers.color("Key Found!\n")
+                                if self.ssh_key == item['opts']['ssh']['key'].encode('utf-8').replace('\n', '').replace('\r', ''):
+                                    print helpers.color("\nKey Found!")
                                     print "===================================="
                                     print helpers.color(single_ip[0].ip_address)
+                                    print
                                     self.key_found = True
-                                    raw_input()
-                                if single_ip[0].ip_address == '208.167.254.99':
-                                    print item['opts']['ssh']['key'].strip('\n')
-                                    #print str(len(item['opts']['ssh']['key']))
-                                    #print "\n\nOther"
-                                    #print self.ssh_key
 
         if not self.key_found:
             print helpers.color("\nKey is not found within the currently loaded data!\n", warning=True)
