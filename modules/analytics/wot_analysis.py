@@ -185,6 +185,8 @@ class Analytics:
             list_counter += 1
         print
 
+        self.top_number = ''
+
         return
 
     # This will sort the dictionary passed into it (or called on itself)

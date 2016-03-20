@@ -44,4 +44,6 @@ class Analytics:
             for ip_address in ip_country:
                 print helpers.color(ip_address)
 
+        self.country = ''
+
         return
