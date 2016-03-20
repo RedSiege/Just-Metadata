@@ -12,7 +12,7 @@ class Analytics:
         self.cli_name = "KeySearch"
         self.description = "Searches for user-provided SSH Key"
         self.ssh_key = ''
-        self.key_found = False
+        self.found_ips = []
 
     def analyze(self, all_ip_objects):
 
@@ -29,19 +29,19 @@ class Analytics:
                         if 'ssh' in item['opts']:
                             if 'key' in item['opts']['ssh']:
                                 if self.ssh_key == item['opts']['ssh']['key'].encode('utf-8').replace('\n', '').replace('\r', ''):
-                                    print helpers.color("\nKey Found!")
-                                    print "===================================="
-                                    print helpers.color(single_ip[0].ip_address)
-                                    print
-                                    self.key_found = True
+                                    self.found_ips.append(single_ip[0].ip_address)
 
-        if not self.key_found:
+        if len(self.found_ips) > 0:
+            print helpers.color("\nKey Found!")
+            print "===================================="
+            for ip in self.found_ips:
+                print helpers.color(ip)
+            print
+
+        else:
             print helpers.color("\nKey is not found within the currently loaded data!\n", warning=True)
 
         self.ssh_key = ''
-        self.key_found = False
+        self.found_ips = []
 
         return
-
-    def dict_sorter(self, data_dictionary):
-        return sorted(data_dictionary.items(), key=lambda x: len(x[1]))
