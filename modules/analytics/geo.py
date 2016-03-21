@@ -219,4 +219,6 @@ class Analytics:
             list_counter += 1
         print
 
+        self.top_number = ''
+
         return

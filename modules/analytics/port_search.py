@@ -45,6 +45,8 @@ class Analytics:
         else:
             helpers.color("Port not open on any loaded IP address!", warning=True)
 
+        self.port_search = ''
+
         return
 
     def dict_sorter(self, data_dictionary):

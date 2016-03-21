@@ -259,6 +259,8 @@ class Analytics:
             list_counter += 1
         print
 
+        self.top_number = ''
+
         return
 
     def dict_sorter(self, data_dictionary):
