@@ -50,13 +50,14 @@ case ${osinfo} in
     pip install shodan --upgrade
     echo
 	# Finish Message
-	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
+	echo '[*] Setup script completed successfully on Debian, enjoy Just-Metadata! :)'
   ;;
   # Ubuntu (tested in 13.10) Dependency Installation
   Ubuntu)
     echo '[*] Installing Ubuntu Dependencies'
     apt-get install -y python-pip
     easy_install -U pip
+    papt-get install python-colorama
     pip install ipwhois
     pip install ipwhois --upgrade
     pip install requests
@@ -66,7 +67,9 @@ case ${osinfo} in
     echo
     echo
 	# Finish Message
-	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
+	echo '[*] Setup script completed successfully on Ubuntu, enjoy Just-Metadata! :)'
+	cat /etc/issue
+	uname -a
   ;;
   *)
   	echo '[!] Error:  Unable to recognize operating system.'

@@ -1,4 +1,5 @@
 '''
+
 This is a class that is used for each IP address.  It will contain IP,
 geo location information, and everything else that can be gathered about
 and IP address.

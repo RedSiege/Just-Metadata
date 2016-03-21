@@ -28,7 +28,7 @@ class Conductor:
         # IP Object module will be where all IPs and their objects (with info)
         # about them will be stored
         # Stored in following format {'IPAddress': [IP_Object, # Instances of IP]}
-        self.ip_objects = {}
+        self.system_objects = {}
 
         # Intel gathering transforms is used to gather information about the
         # loaded IPs
@@ -55,7 +55,6 @@ class Conductor:
             "ip_info": "Display's all info about an IP address",
             "load   ": "Loads IPs into the framework for analysis",
             "list   ": "Prints loaded [analysis] or [gather] modules",
-            "print  ": "Prints gathered info on the provided IP address",
             "save   ": "Saves IPs and attributes to disk for reloading in the future",
             "exit   ": "Exits out of Just-Metadata"
         }
@@ -111,7 +110,7 @@ class Conductor:
         # after that, only values
         add_header = True
 
-        for path, ip_objd in self.ip_objects.iteritems():
+        for path, ip_objd in self.system_objects.iteritems():
             attrs = vars(ip_objd[0])
             with open('export_' + current_date + '_' + current_time + '.csv', 'a') as export_file:
                 csv_file = csv.DictWriter(export_file, attrs.keys())
@@ -123,24 +122,24 @@ class Conductor:
         print helpers.color("\nExport file saved to disk at export_" + current_date + "_" + current_time + ".csv")
         return
 
-    def load_ips(self, file_of_ips):
+    def load_ips(self, file_of_systems):
 
         # Check to make sure file given is a valid file
-        if os.path.isfile(file_of_ips):
+        if os.path.isfile(file_of_systems):
             # read in IPs from a file
-            with open(file_of_ips, "r") as ip_file:
-                ip_addr_dictionary = ip_file.readlines()
-            total_ips = len(ip_addr_dictionary)
+            with open(file_of_systems, "r") as system_file:
+                justmetadata_system_list = system_file.readlines()
+            total_systems = len(justmetadata_system_list)
 
             # Cast each IP its own object
-            for ip in ip_addr_dictionary:
-                activated_ip_object = ip_object.IP_Information(ip.strip())
-                if ip in self.ip_objects:
-                    self.ip_objects[ip][1] = self.ip_objects[ip][1] + 1
+            for system in justmetadata_system_list:
+                activated_system_object = ip_object.IP_Information(system.strip())
+                if system in self.system_objects:
+                    self.system_objects[system][1] = self.system_objects[system][1] + 1
                 else:
-                    self.ip_objects[ip] = [activated_ip_object, 1]
+                    self.system_objects[system] = [activated_system_object, 1]
 
-            print helpers.color("[*] Loaded " + str(total_ips) + " IPs")
+            print helpers.color("[*] Loaded " + str(total_systems) + " systems")
 
         else:
             print helpers.color("\n\n[*] Error: Invalid file path provided!", warning=True)
@@ -296,12 +295,12 @@ class Conductor:
                 print helpers.color("\n\n[!] You just rage quit...", warning=True)
                 sys.exit()
 
-            except Exception as e:
-                print helpers.color("\n\n[!] Encountered Error!", warning=True)
-                print helpers.color(e)
-                print helpers.color("[!] Saving state to disk...", warning=True)
-                print helpers.color("[!] Please report this info to the developer!", warning=True)
-                self.save_state()
+            #except Exception as e:
+            #    print helpers.color("\n\n[!] Encountered Error!", warning=True)
+            #    print helpers.color(e)
+            #    print helpers.color("[!] Saving state to disk...", warning=True)
+            #    print helpers.color("[!] Please report this info to the developer!", warning=True)
+            #    self.save_state()
 
         return
 
@@ -317,10 +316,10 @@ class Conductor:
             hit_module = False
             for path, analytics_obj in self.analytical_transforms.iteritems():
                 if analyze_command.lower() == 'all':
-                    analytics_obj.analyze(self.ip_objects)
+                    analytics_obj.analyze(self.system_objects)
                     hit_module = True
                 elif analyze_command.lower() == analytics_obj.cli_name.lower():
-                    analytics_obj.analyze(self.ip_objects)
+                    analytics_obj.analyze(self.system_objects)
                     hit_module = True
                     break
         except IndexError:
@@ -338,10 +337,10 @@ class Conductor:
         try:
             for path, ig_obj in self.intelgathering_transforms.iteritems():
                 if gather_module.lower() == 'all':
-                    ig_obj.gather(self.ip_objects)
+                    ig_obj.gather(self.system_objects)
                     gather_module_found = True
                 elif gather_module.lower() == ig_obj.cli_name.lower():
-                    ig_obj.gather(self.ip_objects)
+                    ig_obj.gather(self.system_objects)
                     gather_module_found = True
                     break
             if not gather_module_found:
@@ -361,7 +360,7 @@ class Conductor:
         try:
             if os.path.isfile(import_path):
                 try:
-                    self.ip_objects = pickle.load(open(import_path, 'rb'))
+                    self.system_objects = pickle.load(open(import_path, 'rb'))
                     print helpers.color("[*] Successfully imported " + import_path)
                 except IndexError:
                     print helpers.color("[*] Error: Invalid state file.", warning=True)
@@ -383,7 +382,7 @@ class Conductor:
     def run_ipinfo_command(self, ip_addr):
         ip_found = False
         try:
-            for path, ip_objd in self.ip_objects.iteritems():
+            for path, ip_objd in self.system_objects.iteritems():
                 if ip_objd[0].ip_address == ip_addr or ip_addr.lower() == 'all':
                     attrs = vars(ip_objd[0])
                     print ip_objd[0].ip_address
@@ -425,7 +424,7 @@ class Conductor:
         current_time = time.strftime("%H:%M:%S").replace(":", "")
 
         # Save state to disk
-        pickle.dump(self.ip_objects, open(
+        pickle.dump(self.system_objects, open(
             'metadata' + current_date + "_" + current_time
             + '.state', 'wb'))
         print helpers.color("\nState saved to disk at metadata" + current_date + "_" + current_time + ".state")

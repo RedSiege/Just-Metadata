@@ -47,7 +47,7 @@ class IntelGather:
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
-            if incoming_ip_obj[0].shodan_info == "":
+            if incoming_ip_obj[0].shodan_info == "" and incoming_ip_obj[0].ip_address != "":
 
                 if self.api_key is "":
                     print helpers.color("[*] Error: You didn't provide a Shodan API Key!", warning=True)

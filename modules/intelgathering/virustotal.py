@@ -59,8 +59,31 @@ class IntelGather:
                     else:
                         print "Information found on " + helpers.color(incoming_ip_obj[0].ip_address)
                         incoming_ip_obj[0].virustotal = json_response
+                    time.sleep(16)
                 except IOError:
                     print helpers.color("Error while connecting to Virustotal for " + incoming_ip_obj[0].ip_address, warning=True)
+                except ValueError:
+                    print helpers.color("Error loading JSON response for " + incoming_ip_obj[0].domain_name, warning=True)
 
-                time.sleep(16)
+            if incoming_ip_obj[0].domain_name != "" and incoming_ip_obj[0].virustotal_domain is '':
+                request_url = self.api_url + 'domain/report?'
+                parameters = {'domain': incoming_ip_obj[0].domain_name, 'apikey': self.api_key}
+                encoded_params = urllib.urlencode(parameters)
+                full_url = request_url + encoded_params
+                try:
+                    response = urllib.urlopen(full_url).read()
+                    json_response = json.loads(response)
+
+                    if json_response['response_code'] == 0:
+                        print "No information within VirusTotal for " + incoming_ip_obj[0].domain_name
+                        incoming_ip_obj[0].virustotal_domain = "No information within VirusTotal for " + incoming_ip_obj[0].ip_address
+                    else:
+                        print "Information found on " + helpers.color(incoming_ip_obj[0].domain_name)
+                        incoming_ip_obj[0].virustotal_domain = json_response
+                    time.sleep(16)
+                except IOError:
+                    print helpers.color("Error while connecting to Virustotal for " + incoming_ip_obj[0].domain_name, warning=True)
+                except ValueError:
+                    print helpers.color("Error loading JSON response for " + incoming_ip_obj[0].domain_name, warning=True)
+
         return

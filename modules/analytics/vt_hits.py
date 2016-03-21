@@ -34,6 +34,8 @@ class Analytics:
         ip_detected_urls = {}
         ip_undetected_samples = {}
         ip_detected_referrer = {}
+        vt_detected_domains = {}
+        total_detected_domains = {}
 
         for key, value in all_ip_objects.iteritems():
             if type(value[0].virustotal) is dict and \
@@ -83,6 +85,18 @@ class Analytics:
                         referrer_samples[item3['sha256'].encode('utf-8')] = referrer_samples[item3['sha256'].encode('utf-8')] + [value[0].ip_address]
                     else:
                         referrer_samples[item3['sha256'].encode('utf-8')] = [value[0].ip_address]
+
+            if type(value[0].virustotal_domain) is dict and \
+                    "detected_urls" in value[0].virustotal_domain:
+                for single_url in value[0].virustotal_domain['detected_urls']:
+                    if single_url['url'] in vt_detected_domains:
+                        vt_detected_domains[single_url['url']] = vt_detected_domains[single_url['url']] + [value[0].domain_name]
+                    else:
+                        vt_detected_domains[single_url['url']] = [value[0].domain_name]
+                    if value[0].domain_name in total_detected_domains:
+                        total_detected_domains[value[0].domain_name] += 1
+                    else:
+                        total_detected_domains[value[0].domain_name] = 1
 
         # iterate through sorted sha256 hash list
         sorted_256 = self.dict_sorter(unique_sha256)
@@ -209,6 +223,38 @@ class Analytics:
                 print helpers.color(sorted_url_tuples[0] + ": " + str(sorted_url_tuples[1])) + " detected samples"
             else:
                 print helpers.color(sorted_url_tuples[0] + ": " + str(sorted_url_tuples[1])) + " detected sample"
+            print "\n"
+            list_counter += 1
+        print
+
+        # iterate through sorted domains
+        sorted_vt_detected_domains = self.dict_sorter(vt_detected_domains)
+        list_counter = 1
+        print "*" * 70
+        print helpers.color(" " * 20 + "Detected User-Supplied Domains" + " " * 20)
+        print "*" * 70
+        while ((list_counter <= self.top_number) and ((list_counter -1) != len(sorted_vt_detected_domains))):
+            domain_tuple = sorted_urls[-list_counter]
+            print domain_tuple[0]
+            print "*" * 64
+            print "Domain is shared across the following domains: "
+            for ip in domain_tuple[1]:
+                print helpers.color(ip)
+            print "\n"
+            list_counter += 1
+        print
+        print "*" * 70
+        print helpers.color(" " * 15 + "IPs and Total Detected Communicating URLs" + " " * 25)
+        print "*" * 70
+        sorted_total_detected_domains = self.dict_sorter2(total_detected_domains)
+        list_counter = 1
+        while ((list_counter <= self.top_number) and ((list_counter -1) != len(sorted_total_detected_domains))):
+            sorted_url_tuples = sorted_total_detected_domains[-list_counter]
+            print "*" * 64
+            if sorted_url_tuples[1] is not 1:
+                print helpers.color(sorted_url_tuples[0] + ": " + str(sorted_url_tuples[1])) + " detected domains"
+            else:
+                print helpers.color(sorted_url_tuples[0] + ": " + str(sorted_url_tuples[1])) + " detected domain"
             print "\n"
             list_counter += 1
         print

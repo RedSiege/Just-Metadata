@@ -1,8 +1,10 @@
 '''
 This module grabs various threat/intel feeds on the internet and will store
 if the IP is in any of the feeds.
+
 List of feeds came from the isthisipbad project - go check it out!
 https://github.com/jgamblin/isthisipbad
+
 Additional feeds added: stopforumspam, MISP
 To Add:
     NiX spam DNSBL (http://www.dnsbl.manitu.net/lookup.php?language=en&value= or /download/nixspam-ip.dump.gz) check if not redundant with stopforumspam
