@@ -1,15 +1,19 @@
 '''
-
 This is a class that is used for each IP address.  It will contain IP,
 geo location information, and everything else that can be gathered about
 and IP address.
 '''
 
 
+import re
+import socket
+
+
 class IP_Information:
 
-    def __init__(self, provided_ip):
-        self.ip_address = provided_ip
+    def __init__(self, incoming_system):
+        self.ip_address = ""
+        self.domain_name = ""
         self.ip_country = ""
         self.ip_country_code = ""
         self.ip_city = ""
@@ -25,6 +29,7 @@ class IP_Information:
         self.ip_timezone = ""
         self.shodan_info = ""
         self.virustotal = ""
+        self.virustotal_domain = ""
         self.animus_data = ""
         self.tor_exit = ""
         self.emerging_threat = ""
@@ -39,6 +44,21 @@ class IP_Information:
         self.antispam = ""
         self.malc0de = ""
         self.malwarebytes = ""
-	self.MISP_ip_dst = ""
-	self.MISP_ip_src = ""
-	self.stopforumspam = ""
+        self.mywot = ""
+        self.MISP_ip_dst = ""
+        self.MISP_ip_src = ""
+        self.stopforumspam = ""
+
+        if self.check_ip(incoming_system):
+            self.ip_address = incoming_system
+        else:
+            self.domain_name = incoming_system
+            try:
+                self.ip_address = socket.gethostbyname(incoming_system)
+            except socket.gaierror:
+                # This hits when we can't resolve an IP from a provided domain name
+                pass
+
+    def check_ip(self, host):
+        result = re.match("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", host)
+        return result
