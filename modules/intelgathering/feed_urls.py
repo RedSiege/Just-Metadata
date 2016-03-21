@@ -1,14 +1,12 @@
 '''
 This module grabs various threat/intel feeds on the internet and will store
 if the IP is in any of the feeds.
-
 List of feeds came from the isthisipbad project - go check it out!
 https://github.com/jgamblin/isthisipbad
-
 Additional feeds added: stopforumspam, MISP
-To Add: 
-	NiX spam DNSBL (http://www.dnsbl.manitu.net/lookup.php?language=en&value= or /download/nixspam-ip.dump.gz) check if not redundant with stopforumspam
-	AlienVault Reputation Data Feed (https://www.alienvault.com/apps/api/threat/ip/93.183.247.155/?format=json)
+To Add:
+    NiX spam DNSBL (http://www.dnsbl.manitu.net/lookup.php?language=en&value= or /download/nixspam-ip.dump.gz) check if not redundant with stopforumspam
+    AlienVault Reputation Data Feed (https://www.alienvault.com/apps/api/threat/ip/93.183.247.155/?format=json)
 '''
 
 import urllib2
@@ -22,11 +20,6 @@ class IntelGather:
         self.description = "This module checks IPs against potential threat lists"
 
     def gather(self, all_ips):
-
-	MISP_authkey = ""
-	MISP_address = "https://misppriv.circl.lu"
-	OTX_token = ""
-	OTX_address = "https://www.alienvault.com/apps/api/threat/ip/"
 
         try:
             print "Grabbing list of TOR exit nodes.."
@@ -206,152 +199,153 @@ class IntelGather:
         except urllib2.HTTPError:
             malbytes_resp = "Not able to grab information"
 
-	if MISP_authkey is "" or MISP_address is "":
-	    print "You did not define your MISP server address or Authorization Key"
-	else:
-	    try:
-		print "Grabbing MISP ip-dst @ " + MISP_address
-		req = urllib2.Request(MISP_address + '/attributes/text/download/ip-dst')
-		req.add_header('User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
-		req.add_header('Authorization', MISP_authkey)
-		response = urllib2.urlopen(req)
-		MISP_ip_dst_resp = response.read()
+        MISP_authkey = ""
+        MISP_address = "https://misppriv.circl.lu"
+
+        if MISP_authkey is "" or MISP_address is "":
+            print "You did not define your MISP server address or Authorization Key"
+        else:
+            try:
+                print "Grabbing MISP ip-dst @ " + MISP_address
+                req = urllib2.Request(MISP_address + '/attributes/text/download/ip-dst')
+                req.add_header('User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+                req.add_header('Authorization', MISP_authkey)
+                response = urllib2.urlopen(req)
+                MISP_ip_dst_resp = response.read()
             except NameError:
-            	MISP_ip_dst_resp = "Not able to grab information"
+                MISP_ip_dst_resp = "Not able to grab information"
             except urllib2.HTTPError:
-            	MISP_ip_dst_resp = "Not able to grab information"
-	    try:
-		print "Grabbing MISP ip-src @ " + MISP_address
-		req = urllib2.Request(MISP_address + '/attributes/text/download/ip-src')
-		req.add_header('User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
-		req.add_header('Authorization', MISP_authkey)
-		response = urllib2.urlopen(req)
-		MISP_ip_src_resp = response.read()
+                MISP_ip_dst_resp = "Not able to grab information"
+
+            try:
+                print "Grabbing MISP ip-src @ " + MISP_address
+                req = urllib2.Request(MISP_address + '/attributes/text/download/ip-src')
+                req.add_header('User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+                req.add_header('Authorization', MISP_authkey)
+                response = urllib2.urlopen(req)
+                MISP_ip_src_resp = response.read()
             except NameError:
-            	MISP_ip_src_resp = "Not able to grab information"
+                MISP_ip_src_resp = "Not able to grab information"
             except urllib2.HTTPError:
-            	MISP_ip_src_resp = "Not able to grab information"
+                MISP_ip_src_resp = "Not able to grab information"
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
-            if incoming_ip_obj[0].tor_exit is "":
-                if incoming_ip_obj[0].ip_address in tor_response:
-                    incoming_ip_obj[0].tor_exit = True
-                else:
-                    incoming_ip_obj[0].tor_exit = False
+            if incoming_ip_obj[0].ip_address != "":
 
-            if incoming_ip_obj[0].animus_data is "":
-                if incoming_ip_obj[0].ip_address in animus_lines:
-                    incoming_ip_obj[0].animus_data = True
-                else:
-                    incoming_ip_obj[0].animus_data = False
-
-            if incoming_ip_obj[0].emerging_threat is "":
-                if incoming_ip_obj[0].ip_address in ethreats_response:
-                    incoming_ip_obj[0].emerging_threat = True
-                else:
-                    incoming_ip_obj[0].emerging_threat = False
-
-            if incoming_ip_obj[0].in_alienv is "":
-                if incoming_ip_obj[0].ip_address in alientvault_resp:
-                    incoming_ip_obj[0].in_alienv = True
-                else:
-                    incoming_ip_obj[0].in_alienv = False
-
-            if incoming_ip_obj[0].blocklist_de is "":
-                if incoming_ip_obj[0].ip_address in blocklist_resp:
-                    incoming_ip_obj[0].blocklist_de = True
-                else:
-                    incoming_ip_obj[0].blocklist_de = False
-
-            if incoming_ip_obj[0].dragon_ssh is "":
-                if incoming_ip_obj[0].ip_address in drag_ssh_resp:
-                    incoming_ip_obj[0].dragon_ssh = True
-                else:
-                    incoming_ip_obj[0].dragon_ssh = False
-
-            if incoming_ip_obj[0].dragon_vnc is "":
-                if incoming_ip_obj[0].ip_address in drag_vnc_resp:
-                    incoming_ip_obj[0].dragon_vnc = True
-                else:
-                    incoming_ip_obj[0].dragon_vnc = False
-
-            #if incoming_ip_obj[0].openblock is "":
-            #    if incoming_ip_obj[0].ip_address in openblock_resp:
-            #        incoming_ip_obj[0].openblock = True
-            #    else:
-            #        incoming_ip_obj[0].openblock = False
-
-            if incoming_ip_obj[0].nothink_malware is "":
-                if incoming_ip_obj[0].ip_address in ntmalware_resp:
-                    incoming_ip_obj[0].nothink_malware = True
-                else:
-                    incoming_ip_obj[0].nothink_malware = False
-
-            if incoming_ip_obj[0].nothink_ssh is "":
-                if incoming_ip_obj[0].ip_address in ntssh_resp:
-                    incoming_ip_obj[0].nothink_ssh = True
-                else:
-                    incoming_ip_obj[0].nothink_ssh = False
-
-            if incoming_ip_obj[0].feodo is "":
-                if incoming_ip_obj[0].ip_address in feodo_resp:
-                    incoming_ip_obj[0].feodo = True
-                else:
-                    incoming_ip_obj[0].feodo = False
-
-            if incoming_ip_obj[0].antispam is "":
-                if incoming_ip_obj[0].ip_address in antispam_resp:
-                    incoming_ip_obj[0].antispam = True
-                else:
-                    incoming_ip_obj[0].antispam = False
-
-            if incoming_ip_obj[0].malc0de is "":
-                if incoming_ip_obj[0].ip_address in malc0de_resp:
-                    incoming_ip_obj[0].malc0de = True
-                else:
-                    incoming_ip_obj[0].malc0de = False
-
-            if incoming_ip_obj[0].malwarebytes is "":
-                if incoming_ip_obj[0].ip_address in malbytes_resp:
-                    incoming_ip_obj[0].malwarebytes = True
-                else:
-                    incoming_ip_obj[0].malwarebytes = False
-
-            if incoming_ip_obj[0].MISP_ip_dst is "":
-		if MISP_authkey and MISP_address:
-                    if incoming_ip_obj[0].ip_address in MISP_ip_dst_resp:
-			incoming_ip_obj[0].MISP_ip_dst = True
+                if incoming_ip_obj[0].tor_exit is "":
+                    if incoming_ip_obj[0].ip_address in tor_response:
+                        incoming_ip_obj[0].tor_exit = True
                     else:
-			incoming_ip_obj[0].MISP_ip_dst = False
+                        incoming_ip_obj[0].tor_exit = False
 
-            if incoming_ip_obj[0].MISP_ip_src is "":
-		if MISP_authkey and MISP_address:
-                    if incoming_ip_obj[0].ip_address in MISP_ip_src_resp:
-            		incoming_ip_obj[0].MISP_ip_src = True
+                if incoming_ip_obj[0].animus_data is "":
+                    if incoming_ip_obj[0].ip_address in animus_lines:
+                        incoming_ip_obj[0].animus_data = True
                     else:
-            		incoming_ip_obj[0].MISP_ip_src = False
+                        incoming_ip_obj[0].animus_data = False
 
-            try:
-	    	print "Checking stopforumspam for " + incoming_ip_obj[0].ip_address
-		req = urllib2.Request('http://api.stopforumspam.org/api?ip=' + incoming_ip_obj[0].ip_address)
-		req.add_header('User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
-		response = urllib2.urlopen(req)
-		xmlresponse = response.read()
-		stopforumspam_resp = XML(xmlresponse).find('appears').text
-	    except NameError:
-		stopforumspam_resp = "Not able to grab information"
-	    except urllib2.HTTPError:
-		stopforumspam_resp = "Not able to grab information"
-	    if incoming_ip_obj[0].stopforumspam is "":
-		if stopforumspam_resp == "yes":
-		    incoming_ip_obj[0].stopforumspam = True
-		else:
-		    incoming_ip_obj[0].stopforumspam = False
-# try:
-# except
-# except
-# if
-#$ip + "/?format=json"
+                if incoming_ip_obj[0].emerging_threat is "":
+                    if incoming_ip_obj[0].ip_address in ethreats_response:
+                        incoming_ip_obj[0].emerging_threat = True
+                    else:
+                        incoming_ip_obj[0].emerging_threat = False
+
+                if incoming_ip_obj[0].in_alienv is "":
+                    if incoming_ip_obj[0].ip_address in alientvault_resp:
+                        incoming_ip_obj[0].in_alienv = True
+                    else:
+                        incoming_ip_obj[0].in_alienv = False
+
+                if incoming_ip_obj[0].blocklist_de is "":
+                    if incoming_ip_obj[0].ip_address in blocklist_resp:
+                        incoming_ip_obj[0].blocklist_de = True
+                    else:
+                        incoming_ip_obj[0].blocklist_de = False
+
+                if incoming_ip_obj[0].dragon_ssh is "":
+                    if incoming_ip_obj[0].ip_address in drag_ssh_resp:
+                        incoming_ip_obj[0].dragon_ssh = True
+                    else:
+                        incoming_ip_obj[0].dragon_ssh = False
+
+                if incoming_ip_obj[0].dragon_vnc is "":
+                    if incoming_ip_obj[0].ip_address in drag_vnc_resp:
+                        incoming_ip_obj[0].dragon_vnc = True
+                    else:
+                        incoming_ip_obj[0].dragon_vnc = False
+
+                #if incoming_ip_obj[0].openblock is "":
+                #    if incoming_ip_obj[0].ip_address in openblock_resp:
+                #        incoming_ip_obj[0].openblock = True
+                #    else:
+                #        incoming_ip_obj[0].openblock = False
+
+                if incoming_ip_obj[0].nothink_malware is "":
+                    if incoming_ip_obj[0].ip_address in ntmalware_resp:
+                        incoming_ip_obj[0].nothink_malware = True
+                    else:
+                        incoming_ip_obj[0].nothink_malware = False
+
+                if incoming_ip_obj[0].nothink_ssh is "":
+                    if incoming_ip_obj[0].ip_address in ntssh_resp:
+                        incoming_ip_obj[0].nothink_ssh = True
+                    else:
+                        incoming_ip_obj[0].nothink_ssh = False
+
+                if incoming_ip_obj[0].feodo is "":
+                    if incoming_ip_obj[0].ip_address in feodo_resp:
+                        incoming_ip_obj[0].feodo = True
+                    else:
+                        incoming_ip_obj[0].feodo = False
+
+                if incoming_ip_obj[0].antispam is "":
+                    if incoming_ip_obj[0].ip_address in antispam_resp:
+                        incoming_ip_obj[0].antispam = True
+                    else:
+                        incoming_ip_obj[0].antispam = False
+
+                if incoming_ip_obj[0].malc0de is "":
+                    if incoming_ip_obj[0].ip_address in malc0de_resp:
+                        incoming_ip_obj[0].malc0de = True
+                    else:
+                        incoming_ip_obj[0].malc0de = False
+
+                if incoming_ip_obj[0].malwarebytes is "":
+                    if incoming_ip_obj[0].ip_address in malbytes_resp:
+                        incoming_ip_obj[0].malwarebytes = True
+                    else:
+                        incoming_ip_obj[0].malwarebytes = False
+
+                if incoming_ip_obj[0].MISP_ip_dst is "":
+                    if MISP_authkey and MISP_address:
+                            if incoming_ip_obj[0].ip_address in MISP_ip_dst_resp:
+                                incoming_ip_obj[0].MISP_ip_dst = True
+                            else:
+                                incoming_ip_obj[0].MISP_ip_dst = False
+
+                if incoming_ip_obj[0].MISP_ip_src is "":
+                    if MISP_authkey and MISP_address:
+                        if incoming_ip_obj[0].ip_address in MISP_ip_src_resp:
+                            incoming_ip_obj[0].MISP_ip_src = True
+                        else:
+                            incoming_ip_obj[0].MISP_ip_src = False
+
+                try:
+                    print "Checking stopforumspam for " + incoming_ip_obj[0].ip_address
+                    req = urllib2.Request('http://api.stopforumspam.org/api?ip=' + incoming_ip_obj[0].ip_address)
+                    req.add_header('User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+                    response = urllib2.urlopen(req)
+                    xmlresponse = response.read()
+                    stopforumspam_resp = XML(xmlresponse).find('appears').text
+                except NameError:
+                    stopforumspam_resp = "Not able to grab information"
+                except urllib2.HTTPError:
+                    stopforumspam_resp = "Not able to grab information"
+                if incoming_ip_obj[0].stopforumspam is "":
+                    if stopforumspam_resp == "yes":
+                        incoming_ip_obj[0].stopforumspam = True
+                    else:
+                        incoming_ip_obj[0].stopforumspam = False
 
         return
