@@ -46,6 +46,7 @@ class IP_Information:
         self.malc0de = ""
         self.malwarebytes = ""
         self.mywot = ""
+	self.dshield = ""
 
         if self.check_ip(incoming_system):
             self.ip_address = incoming_system
