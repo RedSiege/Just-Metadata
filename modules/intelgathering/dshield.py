@@ -53,12 +53,12 @@ class IntelGather:
                         print "No information within DShield for " + incoming_ip_obj[0].ip_address
                         incoming_ip_obj[0].dshield = "No information within DShield for " + incoming_ip_obj[0].ip_address
                     else:
-                        print "Information found on " + helpers.color(incoming_ip_obj[0].ip_address)
+                        print "Information found on " + incoming_ip_obj[0].ip_address
                         incoming_ip_obj[0].dshield = json_response
                     time.sleep(16)
                 except IOError:
-                    print helpers.color("Error while connecting to DShield for " + incoming_ip_obj[0].ip_address, warning=True)
+                    print "Error while connecting to DShield for " + incoming_ip_obj[0].ip_address
                 except ValueError:
-                    print helpers.color("Error loading JSON response for " + incoming_ip_obj[0].ip_address, warning=True)
+                    print "Error loading JSON response for " + incoming_ip_obj[0].ip_address
 
         return
