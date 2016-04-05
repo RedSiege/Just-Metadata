@@ -24,8 +24,8 @@ if __name__ == '__main__':
 
     if len(sys.argv) > 1:
         parser = argparse.ArgumentParser(
-            add_help=False, description="EyeWitness is a tool used to capture\
-            screenshots from a list of URLs")
+            add_help=False, description="Just-Metadata is a tool used to\
+            gather and analyze metadata about computer systems.")
         parser.add_argument(
             '-h', '-?', '--h', '-help', '--help', action="store_true",
             help=argparse.SUPPRESS)
