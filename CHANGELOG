@@ -1,3 +1,7 @@
+[5.07.2016]
+	 Released.: 1.2
+	 Added....: A lot of stuff since before Troopers16.  Support for domain name.  Now supports CIDR notation, etc.
+
 [6.12.2015]
      Released.: 1.1
      Added....: Added "all" options for both analytical modules and intelgathering modules.  "All" command invokes all modules.

@@ -34,6 +34,8 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
+    pip install netaddr
+    pip install netaddr --upgrade
 	# Finish Message
 	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
   ;;
@@ -48,6 +50,8 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
+    pip install netaddr
+    pip install netaddr --upgrade
     echo
 	# Finish Message
 	echo '[*] Setup script completed successfully on Debian, enjoy Just-Metadata! :)'
@@ -64,6 +68,8 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
+    pip install netaddr
+    pip install netaddr --upgrade
     echo
     echo
 	# Finish Message
