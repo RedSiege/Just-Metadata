@@ -60,6 +60,7 @@ case ${osinfo} in
   Ubuntu)
     echo '[*] Installing Ubuntu Dependencies'
     apt-get install -y python-pip
+    apt-get install -y python-netaddr
     easy_install -U pip
     papt-get install python-colorama
     pip install ipwhois
@@ -68,8 +69,6 @@ case ${osinfo} in
     pip install requests --upgrade
     pip install shodan
     pip install shodan --upgrade
-    pip install netaddr
-    pip install netaddr --upgrade
     echo
     echo
 	# Finish Message
