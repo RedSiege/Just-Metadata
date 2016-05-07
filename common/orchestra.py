@@ -9,6 +9,7 @@ tool.
 import csv
 import glob
 import imp
+import netaddr
 import os
 import pickle
 import sys
@@ -129,15 +130,32 @@ class Conductor:
             # read in IPs from a file
             with open(file_of_systems, "r") as system_file:
                 justmetadata_system_list = system_file.readlines()
-            total_systems = len(justmetadata_system_list)
+            total_systems = 0
 
             # Cast each IP its own object
             for system in justmetadata_system_list:
-                activated_system_object = ip_object.IP_Information(system.strip())
-                if system in self.system_objects:
-                    self.system_objects[system][1] = self.system_objects[system][1] + 1
+                if "/" in system:
+                    try:
+                        for ip in netaddr.IPSet([system]):
+                            ip = str(ip)
+                            activated_system_object = ip_object.IP_Information(ip)
+                            if ip in self.system_objects:
+                                self.system_objects[ip][1] = self.system_objects[ip][1] + 1
+                                total_systems += 1
+                            else:
+                                self.system_objects[ip] = [activated_system_object, 1]
+                                total_systems += 1
+                    except netaddr.core.AddrFormatError:
+                        print helpers.color("[*] Error: Bad IP CIDR range detected! (" + str(system).strip() + ")", warning=True)
+                        continue
                 else:
-                    self.system_objects[system] = [activated_system_object, 1]
+                    activated_system_object = ip_object.IP_Information(system.strip())
+                    if system in self.system_objects:
+                        self.system_objects[system][1] = self.system_objects[system][1] + 1
+                        total_systems += 1
+                    else:
+                        self.system_objects[system] = [activated_system_object, 1]
+                        total_systems += 1
 
             print helpers.color("[*] Loaded " + str(total_systems) + " systems")
 
