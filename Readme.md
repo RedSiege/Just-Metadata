@@ -1,7 +1,5 @@
 # Just-Metadata
 
-[![Build Status](https://travis-ci.org/ChrisTruncer/Just-Metadata.svg?branch=master)](https://travis-ci.org/ChrisTruncer/Just-Metadata)
-
 Just-Metadata is a tool that can be used to gather intelligence information passively about a large number of IP addresses, and attempt to extrapolate relationships that might not otherwise be seen.  Just-Metadata has "gather" modules which are used to gather metadata about IPs loaded into the framework across multiple resources on the internet.  Just-Metadata also has "analysis" modules.  These are used to analyze the data loaded Just-Metadata and perform various operations that can identify potential relationships between the loaded systems.
 
 Just-Metadata will allow you to quickly find the Top "X" number of states, cities, timezones, etc. that the loaded IP addresses are located in.  It will allow you to search for IP addresses by country.  You can search all IPs to find which ones are used in callbacks as identified by VirusTotal.  Want to see if any IPs loaded have been documented as taking part of attacks via the Animus Project, Just-Metadata can do it.
