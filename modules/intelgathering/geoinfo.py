@@ -67,6 +67,10 @@ class IntelGather:
                     print helpers.color("[!] Cannot receive IP Geo Information from source!", warning=True)
                     print helpers.color("[!] Moving to the next IP address...", warning=True)
 
+                except (IOError, httplib.HTTPException):
+                    print helpers.color("[!] Cannot receive IP Geo Information from source!", warning=True)
+                    print helpers.color("[!] Moving to the next IP address...", warning=True)
+
                 # Sleep is here to make sure we don't go over API limits
                 time.sleep(.5)
         return
