@@ -15,7 +15,7 @@ class IntelGather:
     def __init__(self):
         self.cli_name = "VirusTotal"
         self.description = "This module checks VirusTotal for hits on loaded IPs"
-        self.api_key = ["49858c37eb67ff5a1d1f3785e7a9fc06462e097e3a3cfc8a5b2bf6e7d9fb60d4"]
+        self.api_key = ["49858c37eb67ff5a1d1f3785e7a9fc06462e097e3a3cfc8a5b2bf6e7d9fb60d4", "319e86293eac1462bf211189b392c6fd234b966e1e1423f7fd5c797f4bcf8918"]
         self.api_url = 'https://www.virustotal.com/vtapi/v2/'
         self.num_api_keys = len(self.api_key)
 
@@ -46,7 +46,6 @@ class IntelGather:
         for path, incoming_ip_obj in all_ips.iteritems():
 
             if current_key < self.num_api_keys:
-                print self.api_key[current_key]
 
                 if self.check_host(incoming_ip_obj[0].ip_address) and incoming_ip_obj[0].virustotal is '':
                     request_url = self.api_url + 'ip-address/report?'
