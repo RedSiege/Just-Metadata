@@ -32,32 +32,52 @@ class IntelGather:
             else:
                 if self.check_host(incoming_ip_obj[0].ip_address) and incoming_ip_obj[0].hostnames is '':
                     domains = []
-                    user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; FDM; .NET CLR 2.0.50727; InfoPath.2; .NET CLR 1.1.4322)'
-                    credentials = (':%s' % self.api_key).encode('base64')[:-1]
-                    auth = 'Basic %s' % credentials
-                    url = 'https://api.datamarket.azure.com/Bing/Search/Web?Query=%27IP:' + incoming_ip_obj[0].ip_address + '%27&$format=json'
-                    request = urllib2.Request(url)
-                    request.add_header('Authorization', auth)
-                    request.add_header('User-Agent', user_agent)
-                    request_opener = urllib2.build_opener()
-                    try:
-                        response = request_opener.open(request)
-                    except urllib2.HTTPError, e:
-                        if e.code == 401:
-                            print "Error: Wrong API key or not signed in!"
-                            return
-                        print "Connection problem. Connect connect to Bing API!"
-                        return
+                    raw_domains_temp = []
+                    self.count = 0
+                    while 1:
+                       raw_domains = self.get_bing_data(incoming_ip_obj[0].ip_address)
+                       if raw_domains == raw_domains_temp:
+                           break
+                       raw_domains_temp = raw_domains
+                       if raw_domains == -1:
+                           break
+                       self.count += 100
+                       for d in raw_domains:
+                           domains.append(d)
+            incoming_ip_obj[0].hostnames = domains
+            print "Found %d hostnames for %s" % (len(domains), incoming_ip_obj[0].ip_address)
 
-                    response_data = response.read()
-                    json_results = json.loads(response_data)
-		    for i in range(len(json_results['d']['results'])):
-                        domain = json_results['d']['results'][i]['DisplayUrl']
-			# Keep only the FQDN (drop protocol, port and URI)
-                        domain = domain.replace("http://", "").replace("https://", "")
-                        fqdn = domain.split('/', 1)[0]
-                        fqdn = fqdn.split(':', 1)[0]
-                        domains.append(fqdn)
-		    incoming_ip_obj[0].hostnames = domains
+    def get_bing_data(self, ip):
+        domains = []
+        user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; FDM; .NET CLR 2.0.50727; InfoPath.2; .NET CLR 1.1.4322)'
+        credentials = (':%s' % self.api_key).encode('base64')[:-1]
+        auth = 'Basic %s' % credentials
+        url = 'https://api.datamarket.azure.com/Bing/Search/Web?Query=%27IP:' + ip + '%27&$format=json&$skip=' + str(self.count)
+        request = urllib2.Request(url)
+        request.add_header('Authorization', auth)
+        request.add_header('User-Agent', user_agent)
+        request_opener = urllib2.build_opener()
+        try:
+            response = request_opener.open(request)
+        except urllib2.HTTPError, e:
+            if e.code == 401:
+                print "Error: Wrong API key or not signed in!"
+                return
+            print "Connection problem. Connect connect to Bing API!"
+            return
+
+        response_data = response.read()
+        json_results = json.loads(response_data)
+
+	if len(json_results['d']['results']) == 0:
+            return -1
+
+        for i in range(len(json_results['d']['results'])):
+            domain = json_results['d']['results'][i]['DisplayUrl']
+            # Keep only the FQDN (drop protocol, port and URI)
+            domain = domain.replace("http://", "").replace("https://", "")
+            fqdn = domain.split('/', 1)[0]
+            fqdn = fqdn.split(':', 1)[0]
+            domains.append(fqdn)
                         
-        return
+        return domains
