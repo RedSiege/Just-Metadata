@@ -5,8 +5,6 @@ from bing.com
 
 from common import helpers
 
-import pprint
-
 
 class Analytics:
 
@@ -28,8 +26,6 @@ class Analytics:
 	detected_count = {}
 
         for key, value in all_ip_objects.iteritems():
-		pp = pprint.PrettyPrinter(indent=4)
-		pp.pprint(value[0].hostnames)
 		if type(value[0].hostnames) is list:
 			hits = len(value[0].hostnames)
 			if hits > 0:
