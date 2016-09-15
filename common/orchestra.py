@@ -56,7 +56,7 @@ class Conductor:
             "ip_info": "Display's all info about an IP address",
             "load   ": "Loads IPs into the framework for analysis",
             "list   ": "Prints loaded [analysis] or [gather] modules",
-            "save   ": "Saves IPs and attributes to disk for reloading in the future",
+            "save   ": "Saves IPs and attributes to disk for reloading in the future (opt: filename)",
             "exit   ": "Exits out of Just-Metadata"
         }
 
@@ -216,8 +216,10 @@ class Conductor:
                     if self.cli_args.gather is not None:
                         self.run_gather_command(self.cli_args.gather)
 
-                    if self.cli_args.save:
-                        self.save_state()
+                    if self.cli_args.save is not None:
+                        self.save_state(self.cli_args.save)
+                    else:
+                        self.save_state("")
 
                     if self.cli_args.analyze is not None:
                         self.run_analyze_command(self.cli_args.analyze)
@@ -269,7 +271,11 @@ class Conductor:
 
                             # Code for saving current state to disk
                             elif self.user_command.startswith('save'):
-                                self.save_state()
+                                try:
+                                    self.save_state(
+                                        self.user_command.split()[1])
+                                except:
+                                    self.save_state("")
                                 self.user_command = ""
 
                             # Code for loading state from disk
@@ -451,13 +457,18 @@ class Conductor:
             self.check_cli()
         return
 
-    def save_state(self):
+    def save_state(self, f):
         current_date = time.strftime("%m/%d/%Y").replace("/", "")
         current_time = time.strftime("%H:%M:%S").replace(":", "")
 
+        if f == "":
+            f = 'metadata' + current_date + "_" + current_time + '.state'
+
         # Save state to disk
-        pickle.dump(self.system_objects, open(
-            'metadata' + current_date + "_" + current_time
-            + '.state', 'wb'))
-        print helpers.color("\nState saved to disk at metadata" + current_date + "_" + current_time + ".state")
+        try:
+            pickle.dump(self.system_objects, open(f, 'wb'))
+            print helpers.color("\nState saved to disk at " + f)
+        except IOError as e:
+            print helpers.color("\nCannot save state file " + f + ": " + e.strerror)
+            pass
         return
