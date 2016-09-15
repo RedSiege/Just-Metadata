@@ -49,7 +49,7 @@ class Conductor:
         # help_commands just contains commands to be used in the "shell"
         self.commands = {
             "analyze": "Run [module] on the loaded IP addresses",
-            "export" : "Exports all data on all IPs to CSV",
+            "export" : "Exports all data on all IPs to CSV (opt: filename)",
             "gather" : "Requests information and gathers statistics on loaded IP addresses",
             "help   ": "Displays commands and command descriptions",
             "import ": "Import's saved state into Just Metadata",
@@ -103,24 +103,32 @@ class Conductor:
             result += str(var.encode('utf-8'))
         return result
 
-    def export_info(self):
+    def export_info(self, f):
         # Date and Time for export File
         current_date = time.strftime("%m/%d/%Y").replace("/", "")
         current_time = time.strftime("%H:%M:%S").replace(":", "")
+
+        if f == "":
+            f = 'export_' + current_date + '_' + current_time + '.csv'      
+
         # True for printing the header on the first system
         # after that, only values
         add_header = True
 
         for path, ip_objd in self.system_objects.iteritems():
             attrs = vars(ip_objd[0])
-            with open('export_' + current_date + '_' + current_time + '.csv', 'a') as export_file:
-                csv_file = csv.DictWriter(export_file, attrs.keys())
-                if add_header:
-                    csv_file.writeheader()
-                    add_header = False
-                csv_file.writerow(attrs)
+            try:
+                with open(f, 'a') as export_file:
+                    csv_file = csv.DictWriter(export_file, attrs.keys())
+                    if add_header:
+                        csv_file.writeheader()
+                        add_header = False
+                    csv_file.writerow(attrs)
+                    print helpers.color("\nExport file saved to disk at " + f)
+            except IOError as e:
+                print helpers.color("\nCannot export file " + f + ": " + e.strerror)
+                pass
 
-        print helpers.color("\nExport file saved to disk at export_" + current_date + "_" + current_time + ".csv")
         return
 
     def load_ips(self, file_of_systems):
@@ -217,8 +225,10 @@ class Conductor:
                     if self.cli_args.ip_info is not None:
                         self.run_ipinfo_command(self.cli_args.ip_info)
 
-                    if self.cli_args.export:
-                        self.export_info()
+                    if self.cli_args.export is not None:
+                        self.export_info(self.cli_args.export)
+                    else:
+                        self.export_info("")
 
                     sys.exit()
 
@@ -284,7 +294,11 @@ class Conductor:
                             # This will be the export command, used to export
                             # all information into a csv file
                             elif self.user_command.startswith('export'):
-                                self.export_info()
+                                try:
+                                    self.export_info(
+                                        self.user_command.split()[1])
+                                except:
+                                    self.export_info("")
                                 self.user_command = ""
 
                             elif self.user_command.startswith('analyze'):
