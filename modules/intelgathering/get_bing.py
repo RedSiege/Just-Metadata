@@ -61,10 +61,10 @@ class IntelGather:
             response = request_opener.open(request)
         except urllib2.HTTPError, e:
             if e.code == 401:
-                print "Error: Wrong API key or not signed in!"
+                print "ERROR: Wrong API key or not signed in!"
                 return
-            print "Connection problem. Connect connect to Bing API!"
-            return
+            print "ERROR: Connection problem. Connect connect to Bing API! (HTTP error " + e.code + ")"
+            return -1
 
         response_data = response.read()
         json_results = json.loads(response_data)
