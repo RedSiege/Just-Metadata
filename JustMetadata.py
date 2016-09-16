@@ -66,10 +66,10 @@ if __name__ == '__main__':
 
         export_options = parser.add_argument_group('Export Options')
         export_options.add_argument(
-            '-e', '--export', default=False, action='store_true',
+            '-e', '--export', metavar='Filename', default=None,
             help='Analysis module to run')
         export_options.add_argument(
-            '-s', '--save', default=False, action='store_true',
+            '-s', '--save', metavar='Filename', default=None,
             help='Save state to disk')
 
         # parse arguments
