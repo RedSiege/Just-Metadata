@@ -124,10 +124,10 @@ class Conductor:
                         csv_file.writeheader()
                         add_header = False
                     csv_file.writerow(attrs)
-                    print helpers.color("\nExport file saved to disk at " + f)
             except IOError as e:
                 print helpers.color("\nCannot export file " + f + ": " + e.strerror)
-                pass
+                return
+        print helpers.color("\nExport file saved to disk at " + f)
 
         return
 
