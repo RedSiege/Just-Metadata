@@ -16,8 +16,8 @@ class IntelGather:
     def __init__(self):
         self.cli_name = "Bing_IP"
         self.description = "This module uses bing.com to search for hostnames resolving to IPs"
-	# Register at https://datamarket.azure.com/dataset/bing/search
-	self.api_key = ""
+        # Register at https://datamarket.azure.com/dataset/bing/search
+        self.api_key = ""
 
     def check_host(self, host):
         result = re.match("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", host)
@@ -27,23 +27,23 @@ class IntelGather:
 
         for path, incoming_ip_obj in all_ips.iteritems():
 
-	    if self.api_key is "":
-		print "ERROR: You did not provide a Bing API key!"
+            if self.api_key is "":
+                print "ERROR: You did not provide a Bing API key!"
             else:
                 if self.check_host(incoming_ip_obj[0].ip_address) and incoming_ip_obj[0].hostnames is '':
                     domains = []
                     raw_domains_temp = []
                     self.count = 0
                     while 1:
-                       raw_domains = self.get_bing_data(incoming_ip_obj[0].ip_address)
-                       if raw_domains == raw_domains_temp:
-                           break
-                       raw_domains_temp = raw_domains
-                       if raw_domains == -1:
-                           break
-                       self.count += 100
-                       for d in raw_domains:
-                           domains.append(d)
+                        raw_domains = self.get_bing_data(incoming_ip_obj[0].ip_address)
+                        if raw_domains == raw_domains_temp:
+                            break
+                        raw_domains_temp = raw_domains
+                        if raw_domains == -1:
+                            break
+                        self.count += 100
+                        for d in raw_domains:
+                            domains.append(d)
             incoming_ip_obj[0].hostnames = domains
             print "Found %d hostnames for %s" % (len(domains), incoming_ip_obj[0].ip_address)
 
@@ -69,7 +69,7 @@ class IntelGather:
         response_data = response.read()
         json_results = json.loads(response_data)
 
-	if len(json_results['d']['results']) == 0:
+        if len(json_results['d']['results']) == 0:
             return -1
 
         for i in range(len(json_results['d']['results'])):
@@ -79,5 +79,5 @@ class IntelGather:
             fqdn = domain.split('/', 1)[0]
             fqdn = fqdn.split(':', 1)[0]
             domains.append(fqdn)
-                        
+
         return domains
