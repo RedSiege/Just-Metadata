@@ -47,7 +47,16 @@ class IP_Information:
         self.malwarebytes = ""
         self.mywot = ""
         self.dshield = ""
-	self.hostnames = ""
+        self.hostnames = ""
+	self.badips_bruteforce = ""
+	self.badips_telnet = ""
+	self.badips_badbots = ""
+	self.badips_smtp = ""
+	self.badips_http = ""
+	self.webiron = ""
+	self.techhelp = ""
+	self.ciarmy = ""
+	self.rutgers = ""
 
         if self.check_ip(incoming_system):
             self.ip_address = incoming_system
