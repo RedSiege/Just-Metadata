@@ -57,7 +57,8 @@ class Conductor:
             "load   ": "Loads IPs into the framework for analysis",
             "list   ": "Prints loaded [analysis] or [gather] modules",
             "save   ": "Saves IPs and attributes to disk for reloading in the future (opt: filename)",
-            "exit   ": "Exits out of Just-Metadata"
+            "exit   ": "Exits out of Just-Metadata",
+            "quit   ": "Exits out of Just-Metadata"
         }
 
         # command given by the user
@@ -262,6 +263,12 @@ class Conductor:
                             elif self.user_command.startswith('help'):
                                 self.print_commands()
                                 self.user_command = ""
+
+                            elif self.user_command.startswith('exit') or self.user_command.startswith('quit'):
+                                print helpers.color(
+                                    "\n\n[!] Exiting Just Metadata..\n",
+                                    warning=True)
+                                sys.exit()
 
                             elif self.user_command.startswith('exit'):
                                 print helpers.color(
