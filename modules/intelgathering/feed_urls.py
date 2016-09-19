@@ -195,6 +195,114 @@ class IntelGather:
         except urllib2.HTTPError:
             malbytes_resp = "Not able to grab information"
 
+	try:
+            print "Grabbing BadIPs (HTTP) list..."
+            req = urllib2.Request('https://www.badips.com/get/list/http/0?age=12h')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            badips_http_resp = response.read()
+        except NameError:
+            badips_http_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            badips_http_resp = "No able to grab information"
+
+	try:
+            print "Grabbing BadIPs (Bruteforce) list..."
+            req = urllib2.Request('https://www.badips.com/get/list/bruteforce/0?age=12h')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            badips_bruteforce_resp = response.read()
+        except NameError:
+            badips_bruteforce_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            badips_bruteforce_resp = "No able to grab information"
+
+	try:
+            print "Grabbing BadIPs (Telnet) list..."
+            req = urllib2.Request('https://www.badips.com/get/list/telnet/0?age=12h')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            badips_telnet_resp = response.read()
+        except NameError:
+            badips_telnet_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            badips_telent_resp = "No able to grab information"
+
+	try:
+            print "Grabbing BadIPs (Badbots) list..."
+            req = urllib2.Request('https://www.badips.com/get/list/badbots/0?age=12h')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            badips_badbots_resp = response.read()
+        except NameError:
+            badips_badbots_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            badips_badbots_resp = "No able to grab information"
+
+	try:
+            print "Grabbing BadIPs (SMTP) list..."
+            req = urllib2.Request('https://www.badips.com/get/list/smtp/0?age=12h')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            badips_smtp_resp = response.read()
+        except NameError:
+            badips_smtp_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            badips_smtp_resp = "No able to grab information"
+
+	try:
+            print "Grabbing Webiron list..."
+            req = urllib2.Request('https://www.webiron.com/bot_feed//?format=json')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            webiron_resp = response.read()
+        except NameError:
+            webiron_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            webiron_resp = "No able to grab information"
+
+	try:
+            print "Grabbing Techhelp list..."
+            req = urllib2.Request('https://techhelplist.com/block/ip.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            techhelp_resp = response.read()
+        except NameError:
+            techhelp_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            techhelp_resp = "No able to grab information"
+
+	try:
+            print "Grabbing CIArmy Bad Guys list..."
+            req = urllib2.Request('http://cinsscore.com/list/ci-badguys.txt')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            ciarmy_resp = response.read()
+        except NameError:
+            ciarmy_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            ciarmy_resp = "No able to grab information"
+
+	try:
+            print "Grabbing Rutgers.edu list..."
+            req = urllib2.Request('http://report.rutgers.edu/DROP/attackers')
+            req.add_header(
+                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
+            response = urllib2.urlopen(req)
+            rutgers_resp = response.read()
+        except NameError:
+            rutgers_resp = "No able to grab information"
+        except urllib2.HTTPError:
+            rutgers_resp = "No able to grab information"
+
         for path, incoming_ip_obj in all_ips.iteritems():
 
             if incoming_ip_obj[0].ip_address != "":
@@ -282,5 +390,58 @@ class IntelGather:
                         incoming_ip_obj[0].malwarebytes = True
                     else:
                         incoming_ip_obj[0].malwarebytes = False
+
+                if incoming_ip_obj[0].badips_http is "":
+                    if incoming_ip_obj[0].ip_address in badips_http_resp:
+                        incoming_ip_obj[0].badips_http = True
+                    else:
+                        incoming_ip_obj[0].badips_http = False
+                if incoming_ip_obj[0].badips_bruteforce is "":
+                    if incoming_ip_obj[0].ip_address in badips_bruteforce_resp:
+                        incoming_ip_obj[0].badips_bruteforce = True
+                    else:
+                        incoming_ip_obj[0].badips_bruteforce = False
+
+                if incoming_ip_obj[0].badips_telnet is "":
+                    if incoming_ip_obj[0].ip_address in badips_telnet_resp:
+                        incoming_ip_obj[0].badips_telnet = True
+                    else:
+                        incoming_ip_obj[0].badips_telnet = False
+
+                if incoming_ip_obj[0].badips_badbots is "":
+                    if incoming_ip_obj[0].ip_address in badips_badbots_resp:
+                        incoming_ip_obj[0].badips_badbots = True
+                    else:
+                        incoming_ip_obj[0].badips_badbots = False
+
+                if incoming_ip_obj[0].badips_smtp is "":
+                    if incoming_ip_obj[0].ip_address in badips_smtp_resp:
+                        incoming_ip_obj[0].badips_smtp = True
+                    else:
+                        incoming_ip_obj[0].badips_smtp = False
+
+                if incoming_ip_obj[0].webiron is "":
+                    if incoming_ip_obj[0].ip_address in webiron_resp:
+                        incoming_ip_obj[0].webiron = True
+                    else:
+                        incoming_ip_obj[0].webiron = False
+
+                if incoming_ip_obj[0].techhelp is "":
+                    if incoming_ip_obj[0].ip_address in techhelp_resp:
+                        incoming_ip_obj[0].techhelp = True
+                    else:
+                        incoming_ip_obj[0].techhelp = False
+
+                if incoming_ip_obj[0].ciarmy is "":
+                    if incoming_ip_obj[0].ip_address in ciarmy_resp:
+                        incoming_ip_obj[0].ciarmy = True
+                    else:
+                        incoming_ip_obj[0].ciarmy = False
+
+                if incoming_ip_obj[0].rutgers is "":
+                    if incoming_ip_obj[0].ip_address in rutgers_resp:
+                        incoming_ip_obj[0].rutgers = True
+                    else:
+                        incoming_ip_obj[0].rutgers = False
 
         return
