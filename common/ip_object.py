@@ -48,6 +48,7 @@ class IP_Information:
         self.mywot = ""
         self.dshield = ""
         self.hostnames = ""
+        self.hostnames_count = ""
 	self.badips_bruteforce = ""
 	self.badips_telnet = ""
 	self.badips_badbots = ""
