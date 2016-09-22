@@ -29,6 +29,7 @@ class IntelGather:
 
 	    if self.api_key is "":
 		print "ERROR: You did not provide a Bing API key!"
+		return
             else:
                 if self.check_host(incoming_ip_obj[0].ip_address) and incoming_ip_obj[0].hostnames is '':
                     domains = []
@@ -81,4 +82,6 @@ class IntelGather:
             fqdn = fqdn.split(':', 1)[0]
             domains.append(fqdn)
                         
+	# Remove duplicate domains from the list
+	domains = list(set(domains))
         return domains
