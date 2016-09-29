@@ -53,6 +53,8 @@ class Conductor:
             "gather" : "Requests information and gathers statistics on loaded IP addresses",
             "help   ": "Displays commands and command descriptions",
             "import ": "Import's saved state into Just Metadata",
+            "ip_add" : "Add an IP info the framework for analysis",
+            "ip_list" : "List IP addresses loaded in the framework",
             "ip_info": "Display's all info about an IP address",
             "load   ": "Loads IPs into the framework for analysis",
             "list   ": "Prints loaded [analysis] or [gather] modules",
@@ -132,6 +134,36 @@ class Conductor:
 
         return
 
+    def add_ip(self, ipstring):
+	total_systems = 0
+	if "/" in ipstring:
+            try:
+                for ip in netaddr.IPSet([ipstring]):
+	            ip = str(ip)
+	            activated_system_object = ip_object.IP_Information(ip)
+                    if ip in self.system_objects:
+                        self.system_objects[ip][1] = self.system_objects[ip][1] + 1
+                        total_systems += 1
+                    else:
+                        self.system_objects[ip] = [activated_system_object, 1]
+                        total_systems += 1
+            except netaddr.core.AddrFormatError:
+                print helpers.color("[*] Error: Bad IP CIDR range detected! (" + str(ipstring).strip() + ")", warning=True)
+		return 0
+        else:
+            activated_system_object = ip_object.IP_Information(ipstring.strip())
+            if ipstring in self.system_objects:
+                self.system_objects[ipstring][1] = self.system_objects[ipstring][1] + 1
+                total_systems += 1
+            else:
+                self.system_objects[ipstring] = [activated_system_object, 1]
+                total_systems += 1
+	print helpers.color("[*] Added " + ipstring)
+	return total_systems
+    def list_ip(self):
+        for path, ip_objd in self.system_objects.iteritems():
+            print ip_objd[0].ip_address
+
     def load_ips(self, file_of_systems):
 
         # Check to make sure file given is a valid file
@@ -143,28 +175,7 @@ class Conductor:
 
             # Cast each IP its own object
             for system in justmetadata_system_list:
-                if "/" in system:
-                    try:
-                        for ip in netaddr.IPSet([system]):
-                            ip = str(ip)
-                            activated_system_object = ip_object.IP_Information(ip)
-                            if ip in self.system_objects:
-                                self.system_objects[ip][1] = self.system_objects[ip][1] + 1
-                                total_systems += 1
-                            else:
-                                self.system_objects[ip] = [activated_system_object, 1]
-                                total_systems += 1
-                    except netaddr.core.AddrFormatError:
-                        print helpers.color("[*] Error: Bad IP CIDR range detected! (" + str(system).strip() + ")", warning=True)
-                        continue
-                else:
-                    activated_system_object = ip_object.IP_Information(system.strip())
-                    if system in self.system_objects:
-                        self.system_objects[system][1] = self.system_objects[system][1] + 1
-                        total_systems += 1
-                    else:
-                        self.system_objects[system] = [activated_system_object, 1]
-                        total_systems += 1
+                total_ssytems = add_ip(system)
 
             print helpers.color("[*] Loaded " + str(total_systems) + " systems")
 
@@ -301,6 +312,20 @@ class Conductor:
                                         self.user_command.split()[1])
                                 except IndexError:
                                     print helpers.color("[*] Error: The \"ip_info\" command requires an IP address!", warning=True)
+                                    self.check_cli()
+                                self.user_command = ""
+                            elif self.user_command.startswith('ip_add'):
+                                try:
+                                    self.add_ip(
+                                        self.user_command.split()[1])
+                                except IndexError:
+                                    print helpers.color("[*] Error: The \"ip_add\" command requires an IP address!", warning=True)
+                                    self.check_cli()
+                                self.user_command = ""
+                            elif self.user_command.startswith('ip_list'):
+                                try:
+                                    self.list_ip()
+                                except IndexError:
                                     self.check_cli()
                                 self.user_command = ""
 
