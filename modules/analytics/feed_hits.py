@@ -25,6 +25,15 @@ class Analytics:
         self.malc0de = []
         self.malwarebytes = []
         self.animus_data = []
+        self.badips_http = []
+        self.badips_bruteforce = []
+        self.badips_telnet = []
+        self.badips_badbots = []
+        self.badips_smtp = []
+        self.webiron = []
+        self.techhelp = []
+        self.ciarmy = []
+        self.rutgers = []
 
     def analyze(self, all_ip_objects):
 
@@ -72,6 +81,33 @@ class Analytics:
 
             if ip_obj[0].malwarebytes:
                 self.malwarebytes.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].badips_http:
+                self.badips_http.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].badips_bruteforce:
+                self.badips_bruteforce.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].badips_telnet:
+                self.badips_telnet.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].badips_badbots:
+                self.badips_badbots.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].badips_smtp:
+                self.badips_smtp.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].webiron:
+                self.webiron.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].techhelp:
+                self.techhelp.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].ciarmy:
+                self.ciarmy.append(ip_obj[0].ip_address)
+
+            if ip_obj[0].rutgers:
+                self.rutgers.append(ip_obj[0].ip_address)
 
         # Loop over dictionaries and check for hits
         if len(self.tor_exit) > 0:
@@ -184,5 +220,77 @@ class Analytics:
                 print helpers.color(ip)
         else:
             print helpers.color("No loaded IPs are within the MalwareBytes list!", warning=True)
+
+        print
+        if len(self.badips_http) > 0:
+            print "The following IPs are within the BadIPs (HTTP) list:"
+            for ip in self.badips_http:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the BadIPs (HTTP) list!", warning=True)
+ 
+        print
+        if len(self.badips_bruteforce) > 0:
+            print "The following IPs are within the BadIPs (BruteForce) list:"
+            for ip in self.badips_bruteforce:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the BadIPs (Bruteforce) list!", warning=True)    
+ 
+        print
+        if len(self.badips_telnet) > 0:
+            print "The following IPs are within the BadIPs (Telnet) list:"
+            for ip in self.badips_telnet:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the BadIPs (Telnet) list!", warning=True)
+
+        print
+        if len(self.badips_badbots) > 0:
+            print "The following IPs are within the BadIPS (BadBots) list:"
+            for ip in self.badips_badbots:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the BadIPS (BadBots) list!", warning=True)
+
+        print
+        if len(self.badips_smtp) > 0:
+            print "The following IPs are within the BadIPS (SMTP) list:"
+            for ip in self.badips_smtp:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the BadIPS (SMTP) list!", warning=True)
+
+        print
+        if len(self.webiron) > 0:
+            print "The following IPs are within the WebIron list:"
+            for ip in self.webiron:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the WebIron list!", warning=True)
+
+        print
+        if len(self.techhelp) > 0:
+            print "The following IPs are within the TechHelp list:"
+            for ip in self.TechHelp:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the TechHelp list!", warning=True)
+
+        print
+        if len(self.ciarmy) > 0:
+            print "The following IPs are within the CiArmy list:"
+            for ip in self.ciarmy:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the CiArmy list!", warning=True)
+
+        print
+        if len(self.rutgers) > 0:
+            print "The following IPs are within the Rutgers list:"
+            for ip in self.rutgers:
+                print helpers.color(ip)
+        else:
+            print helpers.color("No loaded IPs are within the Rutgers list!", warning=True)
 
         return
