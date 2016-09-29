@@ -54,6 +54,7 @@ class Conductor:
             "help   ": "Displays commands and command descriptions",
             "import ": "Import's saved state into Just Metadata",
             "ip_add" : "Add an IP info the framework for analysis",
+            "ip_delete" : "Remove a loaded IP from the framework"
             "ip_list" : "List IP addresses loaded in the framework",
             "ip_info": "Display's all info about an IP address",
             "load   ": "Loads IPs into the framework for analysis",
@@ -149,7 +150,7 @@ class Conductor:
                         total_systems += 1
             except netaddr.core.AddrFormatError:
                 print helpers.color("[*] Error: Bad IP CIDR range detected! (" + str(ipstring).strip() + ")", warning=True)
-		return 0
+		  return 0
         else:
             activated_system_object = ip_object.IP_Information(ipstring.strip())
             if ipstring in self.system_objects:
@@ -160,6 +161,16 @@ class Conductor:
                 total_systems += 1
 	print helpers.color("[*] Added " + ipstring)
 	return total_systems
+
+    def delete_ip(self, ipstring):
+        if ipstring in self.system_objects:
+            ipstring = str(ipstring)
+            del self.system_objects[ipstring]
+            print helpers.color("[*] Removed " + ipstring)
+        else:
+            print helpers.color("[*] Error: " + ipstring + " is not loaded in the framework", warning=True)
+        return
+
     def list_ip(self):
         for path, ip_objd in self.system_objects.iteritems():
             print ip_objd[0].ip_address
@@ -326,6 +337,14 @@ class Conductor:
                                 try:
                                     self.list_ip()
                                 except IndexError:
+                                    self.check_cli()
+                                self.user_command = ""
+                            elif self.user_command.startswith('ip_delete'):
+                                try:
+                                    self.delete_ip(
+                                        self.user_command.split()[1])
+                                except IndexError:
+                                    print helpers.color("[*] Error: The \"ip_delete\" command requires an IP address!", warning=True)
                                     self.check_cli()
                                 self.user_command = ""
 
