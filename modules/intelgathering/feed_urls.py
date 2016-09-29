@@ -226,10 +226,8 @@ class IntelGather:
                 'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
             response = urllib2.urlopen(req)
             badips_telnet_resp = response.read()
-        except NameError:
+        except:
             badips_telnet_resp = "No able to grab information"
-        except urllib2.HTTPError:
-            badips_telent_resp = "No able to grab information"
 
 	try:
             print "Grabbing BadIPs (Badbots) list..."
