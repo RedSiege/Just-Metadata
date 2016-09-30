@@ -54,7 +54,7 @@ class Conductor:
             "help   ": "Displays commands and command descriptions",
             "import ": "Import's saved state into Just Metadata",
             "ip_add" : "Add an IP info the framework for analysis",
-            "ip_delete" : "Remove a loaded IP from the framework"
+            "ip_delete" : "Remove a loaded IP from the framework",
             "ip_list" : "List IP addresses loaded in the framework",
             "ip_info": "Display's all info about an IP address",
             "load   ": "Loads IPs into the framework for analysis",
