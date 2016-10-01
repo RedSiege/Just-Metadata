@@ -150,7 +150,7 @@ class Conductor:
                         total_systems += 1
             except netaddr.core.AddrFormatError:
                 print helpers.color("[*] Error: Bad IP CIDR range detected! (" + str(ipstring).strip() + ")", warning=True)
-		  return 0
+                return 0
         else:
             activated_system_object = ip_object.IP_Information(ipstring.strip())
             if ipstring in self.system_objects:
