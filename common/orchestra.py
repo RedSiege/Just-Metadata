@@ -186,7 +186,7 @@ class Conductor:
 
             # Cast each IP its own object
             for system in justmetadata_system_list:
-                total_systems = self.add_ip(system)
+                total_systems += self.add_ip(system)
 
             print helpers.color("[*] Loaded " + str(total_systems) + " systems")
 
