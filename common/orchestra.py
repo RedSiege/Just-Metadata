@@ -136,15 +136,16 @@ class Conductor:
         return
 
     def add_ip(self, ipstring):
-	total_systems = 0
-	if "/" in ipstring:
+        total_systems = 0
+        ipstring = ipstring.strip()
+        if "/" in ipstring:
             try:
                 for ip in netaddr.IPSet([ipstring]):
-	            ip = str(ip)
-	            activated_system_object = ip_object.IP_Information(ip)
+                    ip = str(ip)
+                    activated_system_object = ip_object.IP_Information(ip)
                     if ip in self.system_objects:
-                        self.system_objects[ip][1] = self.system_objects[ip][1] + 1
-                        total_systems += 1
+                        print helpers.color("[*] Warning: Skipped duplicate IP ! (" + str(ipstring).strip() + ")", warning=True)
+                        return total_systems
                     else:
                         self.system_objects[ip] = [activated_system_object, 1]
                         total_systems += 1
@@ -154,8 +155,8 @@ class Conductor:
         else:
             activated_system_object = ip_object.IP_Information(ipstring.strip())
             if ipstring in self.system_objects:
-                self.system_objects[ipstring][1] = self.system_objects[ipstring][1] + 1
-                total_systems += 1
+                print helpers.color("[*] Warning: Skipped duplicate IP ! (" + str(ipstring).strip() + ")", warning=True)
+                return total_systems
             else:
                 self.system_objects[ipstring] = [activated_system_object, 1]
                 total_systems += 1
