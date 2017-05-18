@@ -4,6 +4,19 @@
 userid=`id -u`
 osinfo=`cat /etc/issue|cut -d" " -f1|head -n1`
 
+if [ -z "$osinfo" ]; then
+	osinfo=`uname -s`
+	if [ "Darwin" == "$osinfo" ]; then
+		pip="$(pip -V|cut -d" " -f1)"
+		if [ "pip" != "$pip" ]; then 
+			echo "MacosX ($osinfo) does not have pip intalled. Install with brew or ports and come back."
+			exit 1;
+		fi
+	fi
+fi
+
+
+
 # Clear Terminal (For Prettyness)
 clear
 
@@ -77,8 +90,22 @@ case ${osinfo} in
 	cat /etc/issue
 	uname -a
   ;;
+  Darwin)
+	pip install ipwhois
+	pip install ipwhois --upgrade
+	pip install requests
+	pip install requests --upgrade
+	pip install shodan
+	pip install shodan --upgrade
+	pip install netaddr
+	pip install netaddr --upgrade
+	echo
+	echo
+	# Finish Message
+	echo '[*] Setup script completed successfully on '"${osinfo}"', enjoy Just-Metadata! :)'
+  ;;
   *)
-  	echo '[!] Error:  Unable to recognize operating system.'
+	  echo "[!] Error:  Unable to recognize operating system. (${osinfo})"
 	echo '[*] In order to use Just-Metadata, you must manually install '
 	echo '[*] and update pip, and the ipwhois, requests, and shodan python modules.'
 	echo
