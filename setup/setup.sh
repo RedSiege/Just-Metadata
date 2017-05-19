@@ -12,6 +12,9 @@ if [ -z "$osinfo" ]; then
 			echo "MacosX ($osinfo) does not have pip intalled. Install with brew or ports and come back."
 			exit 1;
 		fi
+  else
+    echo "Unsupported OS, if you really want this OS, create a github issue"
+    exit 1;
 	fi
 fi
 
