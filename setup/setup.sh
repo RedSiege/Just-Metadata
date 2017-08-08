@@ -52,6 +52,8 @@ case ${osinfo} in
     pip install shodan --upgrade
     pip install netaddr
     pip install netaddr --upgrade
+    pip install simplejson
+    pip install simplejson --upgrade
 	# Finish Message
 	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
   ;;
@@ -68,6 +70,8 @@ case ${osinfo} in
     pip install shodan --upgrade
     pip install netaddr
     pip install netaddr --upgrade
+    pip install simplejson
+    pip install simplejson --upgrade
     echo
 	# Finish Message
 	echo '[*] Setup script completed successfully on Debian, enjoy Just-Metadata! :)'
@@ -86,6 +90,8 @@ case ${osinfo} in
     pip install shodan --upgrade
     pip install netaddr
     pip install netaddr --upgrade
+    pip install simplejson
+    pip install simplejson --upgrade
     echo
     echo
 	# Finish Message
@@ -102,6 +108,8 @@ case ${osinfo} in
 	pip install shodan --upgrade
 	pip install netaddr
 	pip install netaddr --upgrade
+  pip install simplejson
+  pip install simplejson --upgrade
 	echo
 	echo
 	# Finish Message
