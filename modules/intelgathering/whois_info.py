@@ -24,7 +24,7 @@ class IntelGather:
                 try:
                     print "Gathering whois information about " + incoming_ip_obj[0].ip_address
                     ip_whois = IPWhois(incoming_ip_obj[0].ip_address)
-                    incoming_ip_obj[0].ip_whois = ip_whois.lookup()
+                    incoming_ip_obj[0].ip_whois = ip_whois.lookup_whois()
                 except IPDefinedError:
                     print helpers.color("[*] Error: Private IP address, skipping IP!", warning=True)
                 except HTTPLookupError:
