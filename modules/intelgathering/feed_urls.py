@@ -83,44 +83,6 @@ class IntelGather:
             blocklist_resp = "Not able to grab information"
 
         try:
-            print "Grabbing DragonResearch's SSH list..."
-            req = urllib2.Request(
-                'http://dragonresearchgroup.org/insight/sshpwauth.txt')
-            req.add_header(
-                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
-            response = urllib2.urlopen(req)
-            drag_ssh_resp = response.read()
-        except NameError:
-            drag_ssh_resp = "Not able to grab information"
-        except urllib2.HTTPError:
-            drag_ssh_resp = "Not able to grab information"
-
-        try:
-            print "Grabbing DragonResearch's VNC list..."
-            req = urllib2.Request(
-                'http://dragonresearchgroup.org/insight/vncprobe.txt')
-            req.add_header(
-                'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
-            response = urllib2.urlopen(req)
-            drag_vnc_resp = response.read()
-        except NameError:
-            drag_vnc_resp = "Not able to grab information"
-        except urllib2.HTTPError:
-            drag_vnc_resp = "Not able to grab information"
-
-        #try:
-        #    print "Grabbing OpenBlock IP list..."
-        #    req = urllib2.Request('http://www.openbl.org/lists/date_all.txt')
-        #    req.add_header(
-        #        'User-agent', 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0')
-        #    response = urllib2.urlopen(req)
-        #    openblock_resp = response.read()
-        #except NameError:
-        #    openblock_resp = "Not able to grab information"
-        #except urllib2.HTTPError:
-        #    openblock_resp = "Not able to grab information"
-
-        try:
             print "Grabbing NoThinkMalware list..."
             req = urllib2.Request(
                 'http://www.nothink.org/blacklist/blacklist_malware_http.txt')
@@ -228,24 +190,6 @@ class IntelGather:
                         incoming_ip_obj[0].blocklist_de = True
                     else:
                         incoming_ip_obj[0].blocklist_de = False
-
-                if incoming_ip_obj[0].dragon_ssh is "":
-                    if incoming_ip_obj[0].ip_address in drag_ssh_resp:
-                        incoming_ip_obj[0].dragon_ssh = True
-                    else:
-                        incoming_ip_obj[0].dragon_ssh = False
-
-                if incoming_ip_obj[0].dragon_vnc is "":
-                    if incoming_ip_obj[0].ip_address in drag_vnc_resp:
-                        incoming_ip_obj[0].dragon_vnc = True
-                    else:
-                        incoming_ip_obj[0].dragon_vnc = False
-
-                #if incoming_ip_obj[0].openblock is "":
-                #    if incoming_ip_obj[0].ip_address in openblock_resp:
-                #        incoming_ip_obj[0].openblock = True
-                #    else:
-                #        incoming_ip_obj[0].openblock = False
 
                 if incoming_ip_obj[0].nothink_malware is "":
                     if incoming_ip_obj[0].ip_address in ntmalware_resp:

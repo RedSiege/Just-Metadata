@@ -44,8 +44,9 @@ class IntelGather:
                         self.count += 100
                         for d in raw_domains:
                             domains.append(d)
-            incoming_ip_obj[0].hostnames = domains
-            print "Found %d hostnames for %s" % (len(domains), incoming_ip_obj[0].ip_address)
+            if domains:
+                incoming_ip_obj[0].hostnames = domains
+                print "Found %d hostnames for %s" % (len(domains), incoming_ip_obj[0].ip_address)
 
     def get_bing_data(self, ip):
         domains = []
