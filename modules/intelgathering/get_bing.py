@@ -28,7 +28,8 @@ class IntelGather:
         for path, incoming_ip_obj in all_ips.iteritems():
 
             if self.api_key is "":
-                print "ERROR: You did not provide a Bing API key!"
+                print helpers.color("[*] Error: You didn't provide a Bing API Key!", warning=True)
+                print helpers.color("[*] Please edit Bing module and add in your API Key.", warning=True)
             else:
                 if self.check_host(incoming_ip_obj[0].ip_address) and incoming_ip_obj[0].hostnames is '':
                     domains = []
@@ -44,9 +45,9 @@ class IntelGather:
                         self.count += 100
                         for d in raw_domains:
                             domains.append(d)
-            if domains:
-                incoming_ip_obj[0].hostnames = domains
-                print "Found %d hostnames for %s" % (len(domains), incoming_ip_obj[0].ip_address)
+                if domains:
+                    incoming_ip_obj[0].hostnames = domains
+                    print "Found %d hostnames for %s" % (len(domains), incoming_ip_obj[0].ip_address)
 
     def get_bing_data(self, ip):
         domains = []

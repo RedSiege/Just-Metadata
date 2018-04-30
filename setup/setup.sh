@@ -8,7 +8,7 @@ if [ -z "$osinfo" ]; then
 	osinfo=`uname -s`
 	if [ "Darwin" == "$osinfo" ]; then
 		pip="$(pip -V|cut -d" " -f1)"
-		if [ "pip" != "$pip" ]; then 
+		if [ "pip" != "$pip" ]; then
 			echo "MacosX ($osinfo) does not have pip intalled. Install with brew or ports and come back."
 			exit 1;
 		fi
@@ -96,9 +96,30 @@ case ${osinfo} in
     echo
 	# Finish Message
 	echo '[*] Setup script completed successfully on Ubuntu, enjoy Just-Metadata! :)'
+  ;;
+	# Deepin (tested in 15.5) Dependency Installation
+	Deepin)
+		echo '[*] Installing Deepin Dependencies'
+		apt-get install -y python-pip
+		easy_install -U pip
+		papt-get install python-colorama
+		pip install ipwhois
+		pip install ipwhois --upgrade
+		pip install requests
+		pip install requests --upgrade
+		pip install shodan
+		pip install shodan --upgrade
+		pip install netaddr
+		pip install netaddr --upgrade
+		pip install simplejson
+		pip install simplejson --upgrade
+		echo
+		echo
+	# Finish Message
+	echo '[*] Setup script completed successfully on Deepin, enjoy Just-Metadata! :)'
 	cat /etc/issue
 	uname -a
-  ;;
+	;;
   Darwin)
 	pip install ipwhois
 	pip install ipwhois --upgrade
