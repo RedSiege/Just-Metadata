@@ -11,7 +11,7 @@ class Analytics:
 
     def __init__(self, cli_options):
         self.cli_name = "PortSearch"
-        self.description = "Returns the top \"X\" number of most used ports"
+        self.description = "Identify systems with the target port open"
         if cli_options is None:
             self.port_search = ''
         else:
