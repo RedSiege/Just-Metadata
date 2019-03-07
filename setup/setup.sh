@@ -19,15 +19,17 @@ echo '#                       Just-Metadata Setup                           #'
 echo '#######################################################################'
 echo
 
-SUDO=" "
+SUDO=" "		#If we're already root, no need to use sudo at all
+SUDO_H=" "		#Pip wants sudo -H pip....
 # Check to make sure you are root!
 # Thanks to @themightyshiv for helping to get a decent setup script out
 if [ "${userid}" != '0' ]; then
     if type -path sudo >/dev/null 2>&1 ; then
         SUDO="sudo "
+        SUDO_H="sudo -H "
     else
         echo '[Error]: You must run this setup script with root privileges.' >&2
-        echo
+        echo >&2
         exit 1
     fi
 fi
@@ -68,12 +70,12 @@ case ${osinfo} in
 	if [ "$osinfo" = "Ubuntu" -o "$osinfo" = "Deepin" ]; then
 		$SUDO apt-get install -y python-colorama
 	else
-		$SUDO -H pip install colorama
-		$SUDO -H pip install colorama --upgrade
+		$SUDO_H pip install colorama
+		$SUDO_H pip install colorama --upgrade
 	fi
 	for one_pkg in ipwhois requests shodan netaddr simplejson ; do
-		$SUDO -H pip install "$one_pkg"
-		$SUDO -H pip install "$one_pkg" --upgrade
+		$SUDO_H pip install "$one_pkg"
+		$SUDO_H pip install "$one_pkg" --upgrade
 	done
 	# Finish Message
 	echo -e '\n\n[*] Setup script completed successfully on '"$osinfo"', enjoy Just-Metadata! :)'
