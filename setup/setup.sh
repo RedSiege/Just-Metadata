@@ -5,17 +5,7 @@ userid=`id -u`
 osinfo=`cat /etc/issue|cut -d" " -f1|head -n1`
 
 if [ -z "$osinfo" ]; then
-	osinfo=`uname -s`
-	if [ "Darwin" == "$osinfo" ]; then
-		pip="$(pip -V|cut -d" " -f1)"
-		if [ "pip" != "$pip" ]; then
-			echo "MacosX ($osinfo) does not have pip intalled. Install with brew or ports and come back."
-			exit 1;
-		fi
-  else
-    echo "Unsupported OS, if you really want this OS, create a github issue"
-    exit 1;
-	fi
+    osinfo=`uname -s`
 fi
 
 
@@ -29,119 +19,78 @@ echo '#                       Just-Metadata Setup                           #'
 echo '#######################################################################'
 echo
 
+SUDO=" "		#If we're already root, no need to use sudo at all
+SUDO_H=" "		#Pip wants sudo -H pip....
 # Check to make sure you are root!
 # Thanks to @themightyshiv for helping to get a decent setup script out
 if [ "${userid}" != '0' ]; then
-  echo '[Error]: You must run this setup script with root privileges.'
-  echo
-  exit 1
+    if type -path sudo >/dev/null 2>&1 ; then
+        SUDO="sudo "
+        SUDO_H="sudo -H "
+    else
+        echo '[Error]: You must run this setup script with root privileges.' >&2
+        echo >&2
+        exit 1
+    fi
 fi
+
+# Install pip if needed
+if ! type -path "pip" >/dev/null 2>&1 ; then
+    if [ "$osinfo" = "Darwin" -a -x /opt/local/bin/port ]; then
+        $SUDO port selfupdate
+        $SUDO port -y install py-pip
+    elif [ "$osinfo" = "Darwin" -a -x /usr/local/bin/brew ]; then
+        brew update
+        brew install python
+    elif [ -x /usr/bin/apt-get ]; then
+        $SUDO apt-get install -y python-pip
+    fi
+
+    #Following 2 blocks are fallbacks if we still don't have pip
+    if ! type -path "pip" >/dev/null 2>&1 && type -path easy_install >/dev/null 2>&1 ; then
+        $SUDO easy_install -U pip
+    fi
+
+    if ! type -path "pip" >/dev/null 2>&1 ; then
+        $SUDO python -m ensurepip
+    fi
+
+    if ! type -path "pip" >/dev/null 2>&1 ; then
+        echo 'Unable to find or install pip.  Please install it and rerun this setup script.' >&2
+        exit 1
+    fi
+fi
+
 
 # OS Specific Installation Statement
 case ${osinfo} in
-  # Kali Dependency Installation
-  Kali)
-    echo '[*] Installing Kali Dependencies'
-    apt-get install -y python-pip
-    easy_install -U pip
-    pip install ipwhois
-    pip install ipwhois --upgrade
-    pip install requests
-    pip install requests --upgrade
-    pip install shodan
-    pip install shodan --upgrade
-    pip install netaddr
-    pip install netaddr --upgrade
-    pip install simplejson
-    pip install simplejson --upgrade
+    # Kali/Debian 7+/Ubuntu (tested in 13.10)/Deepin (tested in 15.5)/Darwin(macos) Dependency Installation
+    Kali|Debian|Ubuntu|Deepin|Darwin)
+        echo '[*] Installing '"$osinfo"' Dependencies'
+	if [ "$osinfo" = "Ubuntu" -o "$osinfo" = "Deepin" ]; then
+		$SUDO apt-get install -y python-colorama
+	else
+		$SUDO_H pip install colorama
+		$SUDO_H pip install colorama --upgrade
+	fi
+	for one_pkg in ipwhois requests shodan netaddr simplejson ; do
+		$SUDO_H pip install "$one_pkg"
+		$SUDO_H pip install "$one_pkg" --upgrade
+	done
 	# Finish Message
-	echo '[*] Setup script completed successfully, enjoy Just-Metadata! :)'
-  ;;
-  # Debian 7+ Dependency Installation
-  Debian)
-    echo '[*] Installing Debian Dependencies'
-    apt-get install -y python-pip
-    easy_install -U pip
-    pip install ipwhois
-    pip install ipwhois --upgrade
-    pip install requests
-    pip install requests --upgrade
-    pip install shodan
-    pip install shodan --upgrade
-    pip install netaddr
-    pip install netaddr --upgrade
-    pip install simplejson
-    pip install simplejson --upgrade
-    echo
-	# Finish Message
-	echo '[*] Setup script completed successfully on Debian, enjoy Just-Metadata! :)'
-  ;;
-  # Ubuntu (tested in 13.10) Dependency Installation
-  Ubuntu)
-    echo '[*] Installing Ubuntu Dependencies'
-    apt-get install -y python-pip
-    easy_install -U pip
-    papt-get install python-colorama
-    pip install ipwhois
-    pip install ipwhois --upgrade
-    pip install requests
-    pip install requests --upgrade
-    pip install shodan
-    pip install shodan --upgrade
-    pip install netaddr
-    pip install netaddr --upgrade
-    pip install simplejson
-    pip install simplejson --upgrade
-    echo
-    echo
-	# Finish Message
-	echo '[*] Setup script completed successfully on Ubuntu, enjoy Just-Metadata! :)'
-  ;;
-	# Deepin (tested in 15.5) Dependency Installation
-	Deepin)
-		echo '[*] Installing Deepin Dependencies'
-		apt-get install -y python-pip
-		easy_install -U pip
-		papt-get install python-colorama
-		pip install ipwhois
-		pip install ipwhois --upgrade
-		pip install requests
-		pip install requests --upgrade
-		pip install shodan
-		pip install shodan --upgrade
-		pip install netaddr
-		pip install netaddr --upgrade
-		pip install simplejson
-		pip install simplejson --upgrade
-		echo
-		echo
-	# Finish Message
-	echo '[*] Setup script completed successfully on Deepin, enjoy Just-Metadata! :)'
-	cat /etc/issue
-	uname -a
-	;;
-  Darwin)
-	pip install ipwhois
-	pip install ipwhois --upgrade
-	pip install requests
-	pip install requests --upgrade
-	pip install shodan
-	pip install shodan --upgrade
-	pip install netaddr
-	pip install netaddr --upgrade
-  pip install simplejson
-  pip install simplejson --upgrade
-	echo
-	echo
-	# Finish Message
-	echo '[*] Setup script completed successfully on '"${osinfo}"', enjoy Just-Metadata! :)'
-  ;;
-  *)
-	  echo "[!] Error:  Unable to recognize operating system. (${osinfo})"
-	echo '[*] In order to use Just-Metadata, you must manually install '
-	echo '[*] and update pip, and the ipwhois, requests, and shodan python modules.'
-	echo
-  ;;
+	echo -e '\n\n[*] Setup script completed successfully on '"$osinfo"', enjoy Just-Metadata! :)'
+	if [ "$osinfo" = "Deepin" ]; then
+            cat /etc/issue
+            uname -a
+	fi
+        ;;
+    *)
+        echo "[!] Error:  Unable to recognize operating system. (${osinfo})" >&2
+        echo '[*] In order to use Just-Metadata, you must manually install ' >&2
+        echo '[*] and update pip, and the ipwhois, requests, shodan, netaddr, and simplejson python modules.' >&2
+        echo >&2
+        exit 1
+        ;;
 esac
 
 echo
